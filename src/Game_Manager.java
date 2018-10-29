@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 
 public class Game_Manager {
-    ArrayList<Player> players;
-    Player winner;
-    int iteration;
-    //Board=board;
-    //TODO create board class
+    private ArrayList<Player> players;
+    private Player winner;
+    private int iteration;
+    private Board board;
 }

@@ -1,10 +1,10 @@
 public class Player {
-    int id;
-    String name;
-    double money;
-    int position;
-    boolean inJail;
-    boolean isControlled; //For auto plays
+    private int id;
+    private String name;
+    private double money;
+    private int position;
+    private boolean inJail;
+    private boolean isControlled; //For auto plays
 
 
     // TODO die object need to add
