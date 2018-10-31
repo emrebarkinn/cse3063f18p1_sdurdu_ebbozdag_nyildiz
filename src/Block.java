@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Block {
 
     private int index;
@@ -5,7 +7,7 @@ public class Block {
     private double price;
     private double rent;
     private Player owner;
-    private Player visiter;
+    private ArrayList<Player> visiter;
 
     public Block() {
 
@@ -19,10 +21,10 @@ public class Block {
     }
 
     public void playerVisit(Player player){
-
+        visiter.add(player);
     }
 
     public void playTurn(Player player){
-
+        //TODO
     }
 }

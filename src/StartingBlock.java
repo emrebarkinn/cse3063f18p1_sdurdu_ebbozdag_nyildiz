@@ -1,2 +1,5 @@
-public class StartingBlock {
+public class StartingBlock extends Block {
+    public StartingBlock() {
+
+    }
 }

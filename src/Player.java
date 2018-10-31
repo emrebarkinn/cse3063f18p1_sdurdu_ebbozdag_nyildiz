@@ -1,13 +1,35 @@
 public class Player {
-    private int id;
+
     private String name;
     private double money;
     private int position;
     private boolean inJail;
     private boolean isControlled; //For auto plays
+    private int initialDiceValue;
+
+    public int getInitialDiceValue() {
+        return initialDiceValue;
+    }
+
+    public void setInitialDiceValue(int initialDiceValue) {
+        this.initialDiceValue = initialDiceValue;
+    }
+
     int waiting_time;
 
+    public Player() {
 
+    }
+
+    public Player(String name, double money, int position, boolean isControlled) {
+        this.name = name;
+        this.money = money;
+        this.position = position;
+        this.inJail = false;
+        this.isControlled = isControlled;
+        this.waiting_time = 0;
+    }
+    //TODO add generate random user name function
     public void increaseMoney(int a){
 
     }
@@ -16,13 +38,6 @@ public class Player {
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
