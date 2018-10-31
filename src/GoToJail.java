@@ -1,12 +1,18 @@
-public class Go_To_Jail extends Block{
+public class GoToJail extends Block{
     int jail_visit_index;
     int waiting_time;
 
 
-    public Go_To_Jail() {
+    public GoToJail() {
         super();
 
     }
+
+    @Override
+    public void playTurn(Player player){
+
+    }
+
     public int getJail_visit_index() {
         return jail_visit_index;
     }

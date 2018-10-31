@@ -1,8 +1,11 @@
 public class Block {
+
     private int index;
     private String name;
     private double price;
     private double rent;
+    private Player owner;
+    private Player visiter;
 
     public Block() {
 
@@ -13,5 +16,13 @@ public class Block {
         this.name = name;
         this.price = price;
         this.rent = rent;
+    }
+
+    public void playerVisit(Player player){
+
+    }
+
+    public void playTurn(Player player){
+
     }
 }
