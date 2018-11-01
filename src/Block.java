@@ -6,6 +6,15 @@ public class Block {
     private String name;
     private double price;
     private double rent;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private Player owner;
     private ArrayList<Player> visiter;
 
@@ -26,5 +35,10 @@ public class Block {
 
     public void playTurn(Player player){
         //TODO
+        printBlock(player);
+    }
+    public void printBlock(Player player){
+        String name= (!player.isControlled()) ? player.getName() : "Player "+player.getName();
+        System.out.println( name+" in the "+getName()+" block.");
     }
 }

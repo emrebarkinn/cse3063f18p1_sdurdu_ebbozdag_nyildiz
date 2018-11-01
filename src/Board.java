@@ -20,15 +20,15 @@ public class Board {
                 continue;
             }
             */
-            blocks.add(new Block(i,""+i,200,20));
+            blocks.add(new Block(i,""+i,200,20));//for now we only create 39 blocks and one startingBlock
         }
     }
 
     public Block getBlock(int index){
         //TODO not finished
 
-        Block block = new Block();
-        return block;
+
+        return blocks.get(index);
     }
 
     public Player moveCalculate(int index){
@@ -36,8 +36,8 @@ public class Board {
         return player;
     }
 
-    public void move(Board board, Player player, int step){
-
+    public void move(Player player){
+        blocks.get(player.getPosition()).playTurn(player);
     }
 
 

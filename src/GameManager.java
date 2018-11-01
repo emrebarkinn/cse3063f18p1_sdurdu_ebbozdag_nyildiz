@@ -32,7 +32,7 @@ public class GameManager {
         //TODO to here
         createPlayers(players,userName,playerNum,money);
         determineOrder(players);
-        iteration(players,board);
+        iteration();
 
 
 
@@ -72,8 +72,19 @@ public class GameManager {
         return players;
     }
 
-    public void iteration(ArrayList<Player> arr, Board board){
+    public void iteration(){
         //TODO code this metod
+
+        for(int i=0;i<players.size();i++){
+            players.get(i).movePlayer(rollTurnDice());
+            if(players.get(i).getPosition()>board.SIZE) {
+                players.get(i).setPosition(players.get(i).getPosition() - board.SIZE);
+                //TODO give money to player he finished full board turn
+
+            }
+            board.move(players.get(i));
+
+        }
         //(in a loop)roll dice for every player and calculate the step size
         //call move method from board and move player
         //check if playerlocation + step size is greater than the board size and if it is greater
@@ -100,6 +111,10 @@ public class GameManager {
     public void setBoard(Board board) {
         this.board = board;
     }
-
+    public int rollTurnDice(){
+        die1.rollDice();
+        die2.rollDice();
+        return die1.getFace()+die2.getFace();
+    }
 
 }

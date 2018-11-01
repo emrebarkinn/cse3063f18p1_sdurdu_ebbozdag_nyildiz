@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Player {
 
     private String name;
@@ -6,7 +8,8 @@ public class Player {
     private boolean inJail;
     private boolean isControlled; //For auto plays
     private int initialDiceValue;
-
+    //
+    private ArrayList<Block> ownedBlocks;
     public int getInitialDiceValue() {
         return initialDiceValue;
     }
@@ -87,8 +90,17 @@ public class Player {
         this.waiting_time = waiting_time;
     }
 
+    public void addOwnedBlock(Block owned){
+        ownedBlocks.add(owned);
+
+    }
+    public void sellOwnedBlock(int index){
+        //TODO not finished
+    }
+    public void movePlayer(int stepSize){
+        this.position+= stepSize;
+    }
 
 
-    // TODO die object need to add
 
 }
