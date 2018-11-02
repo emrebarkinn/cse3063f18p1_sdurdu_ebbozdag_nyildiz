@@ -8,6 +8,7 @@ public class Player {
     private boolean inJail;
     private boolean isControlled; //For auto plays
     private int initialDiceValue;
+    private int waiting_time;
     //
     private ArrayList<Block> ownedBlocks;
     public int getInitialDiceValue() {
@@ -18,7 +19,7 @@ public class Player {
         this.initialDiceValue = initialDiceValue;
     }
 
-    int waiting_time;
+
 
     public Player() {
 
@@ -33,12 +34,12 @@ public class Player {
         this.waiting_time = 0;
     }
     //TODO add generate random user name function
-    public void increaseMoney(int a){
-
+    public void increaseMoney(int money){
+        this.money+=money;
     }
 
-    public void decreaseMoney(int a){
-
+    public void decreaseMoney(int money){
+        this.money-=money;
     }
 
 
@@ -70,8 +71,8 @@ public class Player {
         return inJail;
     }
 
-    public void setInJail(boolean inJail) {
-        this.inJail = inJail;
+    public void updateInJail() {
+        this.inJail = (this.waiting_time!=0);
     }
 
     public boolean isControlled() {
@@ -89,6 +90,7 @@ public class Player {
     public void setWaiting_time(int waiting_time) {
         this.waiting_time = waiting_time;
     }
+
 
     public void addOwnedBlock(Block owned){
         ownedBlocks.add(owned);

@@ -1,16 +1,23 @@
 public class GoToJail extends Block{
-    int jail_visit_index;
-    int waiting_time;
-
+    private int jail_visit_index;
+    private int waiting_time;
+    private int penaltyMoney;
 
     public GoToJail() {
         super();
-
+        super.setName("Go To Jail");
+        this.waiting_time=3;
+        this.penaltyMoney=100;
     }
 
     @Override
     public void playTurn(Player player){
-
+        super.printBlock(player);
+        player.setWaiting_time(waiting_time);
+        player.decreaseMoney(penaltyMoney);
+        System.out.println(player.getName() + " have to pay penalty money: " + penaltyMoney + "\n Now " + player.getName()
+                + " has " + player.getMoney() + " money.");
+        //TODO send player to player to mapushane
     }
 
     public int getJail_visit_index() {

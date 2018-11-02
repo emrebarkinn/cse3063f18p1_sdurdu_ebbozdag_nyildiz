@@ -8,6 +8,6 @@ public class JailVisit extends Block {
 
     @Override
     public void playTurn(Player player){
-
+        super.printBlock(player);
     }
 }

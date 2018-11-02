@@ -11,12 +11,15 @@ public class GameManager {
     private Die die1;
     private Die die2;
     private int playerNum;
+    private int turnMoney;
+
 
     public GameManager() {
         this.players = new ArrayList <Player>();
         this.die1 = new Die();
         this.die2 = new Die();
         this.board=new Board();
+        this.turnMoney = 100;
     }
 
     public void startGame(){
@@ -32,7 +35,14 @@ public class GameManager {
         //TODO to here
         createPlayers(players,userName,playerNum,money);
         determineOrder(players);
-        iteration();
+        for(int i=0;i<20;i++){
+            iteration();
+            if(i==5)
+                setTurnMoney(0);
+        }
+        for(int i=0;i<players.size();i++)
+            System.out.println("Player name : "+players.get(i).getName()+" Money: "+ players.get(i).getMoney());
+
 
 
 
@@ -49,7 +59,7 @@ public class GameManager {
         for (int i=0; i<arr.size();i++){
         die1.rollDice();
         die2.rollDice();
-        System.out.println("For Player "+arr.get(i).getName()+"Dices are :"+die1.getFace()+"  "+die2.getFace());
+        System.out.println("For Player "+arr.get(i).getName()+" Dices are :"+die1.getFace()+"  "+die2.getFace());
         arr.get(i).setInitialDiceValue(die1.getFace()+die2.getFace());
         }
         bubbleSortPlayers(arr);
@@ -76,14 +86,22 @@ public class GameManager {
         //TODO code this metod
 
         for(int i=0;i<players.size();i++){
+            if(players.get(i).isInJail()){
+                players.get(i).setWaiting_time(players.get(i).getWaiting_time()-1);
+                players.get(i).updateInJail();
+                continue;
+            }
             players.get(i).movePlayer(rollTurnDice());
-            if(players.get(i).getPosition()>board.SIZE) {
-                players.get(i).setPosition(players.get(i).getPosition() - board.SIZE);
-                //TODO give money to player he finished full board turn
+            if(players.get(i).getPosition()>=board.SIZE) {
+                players.get(i).setPosition(players.get(i).getPosition() % board.SIZE);
+                players.get(i).increaseMoney(getTurnMoney());
+                System.out.println(players.get(i).getName() + " gain turn money: " + turnMoney + "\n Now " + players.get(i).getName()
+                 + " has " + players.get(i).getMoney() + " money.");
 
             }
+            System.out.println("For " + players.get(i).getName() + " dice :" + die1.getFace() + " " + die2.getFace());
             board.move(players.get(i));
-
+            System.out.println();
         }
         //(in a loop)roll dice for every player and calculate the step size
         //call move method from board and move player
@@ -117,4 +135,11 @@ public class GameManager {
         return die1.getFace()+die2.getFace();
     }
 
+    public int getTurnMoney() {
+        return turnMoney;
+    }
+
+    public void setTurnMoney(int turnMoney) {
+        this.turnMoney = turnMoney;
+    }
 }
