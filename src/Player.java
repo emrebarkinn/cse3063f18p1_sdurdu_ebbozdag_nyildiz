@@ -9,15 +9,9 @@ public class Player {
     private boolean isControlled; //For auto plays
     private int initialDiceValue;
     private int waiting_time;
+    private int fullTurnCount;
     //
     private ArrayList<Block> ownedBlocks;
-    public int getInitialDiceValue() {
-        return initialDiceValue;
-    }
-
-    public void setInitialDiceValue(int initialDiceValue) {
-        this.initialDiceValue = initialDiceValue;
-    }
 
 
 
@@ -32,13 +26,14 @@ public class Player {
         this.inJail = false;
         this.isControlled = isControlled;
         this.waiting_time = 0;
+        this.ownedBlocks=new ArrayList <Block>();
     }
     //TODO add generate random user name function
-    public void increaseMoney(int money){
+    public void increaseMoney(double money){
         this.money+=money;
     }
 
-    public void decreaseMoney(int money){
+    public void decreaseMoney(double money){
         this.money-=money;
     }
 
@@ -102,6 +97,23 @@ public class Player {
     public void movePlayer(int stepSize){
         this.position+= stepSize;
     }
+
+
+    public int getFullTurnCount() {
+        return fullTurnCount;
+    }
+
+    public void updateFullTurnCount() {
+        this.fullTurnCount++;
+    }
+    public int getInitialDiceValue() {
+        return initialDiceValue;
+    }
+
+    public void setInitialDiceValue(int initialDiceValue) {
+        this.initialDiceValue = initialDiceValue;
+    }
+
 
 
 

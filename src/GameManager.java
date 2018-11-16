@@ -37,8 +37,7 @@ public class GameManager {
         determineOrder(players);
         for(int i=0;i<20;i++){
             iteration();
-            if(i==5)
-                setTurnMoney(0);
+
         }
         for(int i=0;i<players.size();i++)
             System.out.println("Player name : "+players.get(i).getName()+" Money: "+ players.get(i).getMoney());
@@ -85,22 +84,24 @@ public class GameManager {
     public void iteration(){
         //TODO code this metod
 
-        for(int i=0;i<players.size();i++){
-            if(players.get(i).isInJail()){
-                players.get(i).setWaiting_time(players.get(i).getWaiting_time()-1);
-                players.get(i).updateInJail();
+        for(Player player: players){
+            if(player.isInJail()){
+                player.setWaiting_time(player.getWaiting_time()-1);
+                player.updateInJail();
                 continue;
             }
-            players.get(i).movePlayer(rollTurnDice());
-            if(players.get(i).getPosition()>=board.SIZE) {
-                players.get(i).setPosition(players.get(i).getPosition() % board.SIZE);
-                players.get(i).increaseMoney(getTurnMoney());
-                System.out.println(players.get(i).getName() + " gain turn money: " + turnMoney + "\n Now " + players.get(i).getName()
-                 + " has " + players.get(i).getMoney() + " money.");
+            player.movePlayer(rollTurnDice());
+            if(player.getPosition()>=board.SIZE) {
+                player.setPosition(player.getPosition() % board.SIZE);
+                if(player.getFullTurnCount()<5) {  //TODO define fullTurnNumber limit instead of using 5
+                    player.increaseMoney(getTurnMoney());
+                    System.out.println(player.getName() + " gain turn money: " + turnMoney + "\n Now " + player.getName()
+                            + " has " + player.getMoney() + " money.");
+                }
 
             }
-            System.out.println("For " + players.get(i).getName() + " dice :" + die1.getFace() + " " + die2.getFace());
-            board.move(players.get(i));
+            System.out.println("For " + player.getName() + " dice :" + die1.getFace() + " " + die2.getFace());
+            board.move(player);
             System.out.println();
         }
         //(in a loop)roll dice for every player and calculate the step size
