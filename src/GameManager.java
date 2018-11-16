@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -12,6 +12,7 @@ public class GameManager {
     private Die die2;
     private int playerNum;
     private int turnMoney;
+    private int fullTurnNumber;
 
 
     public GameManager() {
@@ -23,7 +24,7 @@ public class GameManager {
     }
 
     public void startGame(){
-        //TODO convert this codes into a method
+        //TODO convert this codes into a method and needs error checks
         Scanner scan=new Scanner(System.in);
         System.out.print("Please enter the user name :");
         String userName= scan.nextLine();
@@ -32,11 +33,15 @@ public class GameManager {
         scan.nextLine();
         System.out.print("Please enter the initial money :");
         double money= scan.nextDouble();
+        System.out.println("Please enter the full turn limit (if any player will reach that fullturn number game will be finished) :");
+        fullTurnNumber=scan.nextInt();
+
         //TODO to here
         createPlayers(players,userName,playerNum,money);
         determineOrder(players);
-        for(int i=0;i<20;i++){
-            iteration();
+        boolean condCheck=true;
+        while(condCheck){
+            condCheck=iteration();
 
         }
         for(int i=0;i<players.size();i++)
@@ -81,33 +86,37 @@ public class GameManager {
         return players;
     }
 
-    public void iteration(){
-        //TODO code this metod
+    public boolean iteration(){
 
         for(Player player: players){
+            player.updateInJail();
             if(player.isInJail()){
                 player.setWaiting_time(player.getWaiting_time()-1);
-                player.updateInJail();
+
                 continue;
             }
             player.movePlayer(rollTurnDice());
             if(player.getPosition()>=board.SIZE) {
+
+                player.updateFullTurnCount();
                 player.setPosition(player.getPosition() % board.SIZE);
-                if(player.getFullTurnCount()<5) {  //TODO define fullTurnNumber limit instead of using 5
+
+                if(player.getFullTurnCount()<fullTurnNumber) {  //TODO define fullTurnNumber limit instead of using 5
                     player.increaseMoney(getTurnMoney());
                     System.out.println(player.getName() + " gain turn money: " + turnMoney + "\n Now " + player.getName()
                             + " has " + player.getMoney() + " money.");
+                }else{
+                    return false;
                 }
 
             }
+            System.out.println("\n");
             System.out.println("For " + player.getName() + " dice :" + die1.getFace() + " " + die2.getFace());
-            board.move(player);
-            System.out.println();
+
+
+            if(!board.move(player)) return false;
         }
-        //(in a loop)roll dice for every player and calculate the step size
-        //call move method from board and move player
-        //check if playerlocation + step size is greater than the board size and if it is greater
-        //then subtract boardsize and give that player a money
+        return true;
     }
 
     public void setPlayers(ArrayList<Player> players) {

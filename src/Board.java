@@ -24,7 +24,7 @@ public class Board {
                 continue;
             }
 
-            blocks.add(new Block(i,""+i,200,20));//for now we only create 39 blocks and one startingBlock
+            blocks.add(new Block(i,""+i,300,200));//for now we only create 36 blocks,3 gotojail block  and one startingBlock
         }
     }
 
@@ -40,9 +40,9 @@ public class Board {
         return player;
     }
 
-    public void move(Player player){
+    public boolean move(Player player){
 
-        blocks.get(player.getPosition()).playTurn(player);
+        return blocks.get(player.getPosition()).playTurn(player);
     }
 
 

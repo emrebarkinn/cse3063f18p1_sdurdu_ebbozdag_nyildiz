@@ -27,6 +27,7 @@ public class Player {
         this.isControlled = isControlled;
         this.waiting_time = 0;
         this.ownedBlocks=new ArrayList <Block>();
+        this.fullTurnCount=0;
     }
     //TODO add generate random user name function
     public void increaseMoney(double money){

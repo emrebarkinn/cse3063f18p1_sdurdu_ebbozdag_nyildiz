@@ -50,55 +50,59 @@ public class Block {
         visiter.add(player);
     }
 
-    public void playTurn(Player player){
-        //TODO
+    public boolean playTurn(Player player){ //it is boolean for end the game
+
         boolean bankruptcy=false;
         printBlock(player);
-        if(this.owner==null && player.getMoney()>this.getPrice()){
+        if(this.owner==null && player.getMoney()>=this.getPrice()){
             purchaseBlock(player);
         }else if(this.owner==null){
             System.out.println(player.getName()+" has not enough money to buy "+this.getName()+" block");
         }else if(this.owner!=player){
-            bankruptcy= rentBlock(player);
+            rentBlock(player);
 
         }
-        if(bankruptcy){
-            // TODO what is gona happen after bankrupcy
-        }
+        if(player.getMoney()<0)
+            bankruptcy=true;
 
+
+        return !bankruptcy;
 
     }
     public void printBlock(Player player){
-        String name= (!player.isControlled()) ? player.getName() : "Player "+player.getName();
+        String name= (!player.isControlled()) ? player.getName() : "Player "+player.getName()+" and has "+player.getMoney()+" money";
         System.out.println( name+" in the "+getName()+" block.");
     }
     public void purchaseBlock(Player player){
+
         Scanner scan =new Scanner(System.in);
-        String input="y";
+        String input="y"; //TODO error check
+
         if(!player.isControlled()) {
             System.out.println("Block "+this.getName()+" price is :" + this.getPrice()+" and rent price:"+this.getRent());
             System.out.println("Do you want to purchase " + this.getName() + " block ? y/n");
             input =scan.next();
         }
-        if(input == "y" || input == "Y") {
+        if(input.equals("y") || input.equals("Y")) {
             player.addOwnedBlock(this);
             this.owner = player;
             player.decreaseMoney(this.getPrice());
-            System.out.println(player.getName()+" just bought the "+this.getName()+" block");
+            System.out.println(player.getName()+" just bought the block "+this.getName()+
+                    "\nNow Player"+ player.getName()+" has "+player.getMoney()+" money");
+
         }
     }
-    public boolean rentBlock(Player player){
+    public void rentBlock(Player player){
 
         System.out.println("Block "+this.getName()+" has already an owner and owner name is :"+this.owner.getName());
         System.out.println("Player "+ player.getName()+" have to pay "+this.getRent()+" to player "+this.owner.getName());
 
-        if(player.getMoney()<this.getRent())
-            return true;
 
         player.decreaseMoney(this.rent);
         this.owner.increaseMoney(this.rent);
-        System.out.println(player.getName()+" just pay a rent ("+this.getRent()+") for block "+this.getName());
-        return false;
+        System.out.println(player.getName()+" just pay a rent ("+this.getRent()+") for block "+this.getName()+
+                "\nNow Player"+ player.getName()+" has "+player.getMoney()+" money");
+
     }
 
 }
