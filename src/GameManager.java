@@ -44,6 +44,8 @@ public class GameManager {
             condCheck=iteration();
 
         }
+
+        //TODO add owned blocks prices to final players
         for(int i=0;i<players.size();i++)
             System.out.println("Player name : "+players.get(i).getName()+" Money: "+ players.get(i).getMoney());
 
@@ -67,7 +69,7 @@ public class GameManager {
         arr.get(i).setInitialDiceValue(die1.getFace()+die2.getFace());
         }
         bubbleSortPlayers(arr);
-
+        System.out.println("Player " + arr.get(0).getName() + " plays first..");
 
     }
     public void bubbleSortPlayers(ArrayList<Player> arr){
@@ -105,10 +107,7 @@ public class GameManager {
                     player.increaseMoney(getTurnMoney());
                     System.out.println(player.getName() + " gain turn money: " + turnMoney + "\n Now " + player.getName()
                             + " has " + player.getMoney() + " money.");
-                }else{
-                    return false;
                 }
-
             }
             System.out.println("\n");
             System.out.println("For " + player.getName() + " dice :" + die1.getFace() + " " + die2.getFace());

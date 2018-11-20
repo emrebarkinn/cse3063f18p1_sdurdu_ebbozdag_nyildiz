@@ -1,4 +1,6 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Player {
 
@@ -92,7 +94,36 @@ public class Player {
         ownedBlocks.add(owned);
 
     }
-    public void sellOwnedBlock(int index){
+    public boolean sellOwnedBlock(){    //return type boolean because in "playTurn" work "purchaseBlock" after succesful selling
+        if(ownedBlocks.size()==0){      //blockless players can't sell anything
+            return false;
+        }
+
+        //print owned blocks
+        System.out.println("0) Dont sell any block!");
+        for(int i = 0; i<ownedBlocks.size(); i++){
+            System.out.print( (i+1) + ") owned block is: " + ownedBlocks.get(i).getName());
+            System.out.println(" price is: " + ownedBlocks.get(i).getPrice() + " and rent is: " + ownedBlocks.get(i).getRent());
+        }
+
+        //choose a block to sell or don't sell, if computer plays; sell first owned block
+        Scanner scan = new Scanner(System.in);
+        int input=2;
+        if(!isControlled){
+            System.out.println("Choose block number to SELL in above list");
+            input = scan.nextInt();
+        }
+
+        if(input==0){  //"don't sell" option
+            return false;
+        }
+        input--;  //set true index for arraylist
+        System.out.println("You sell the block \"" + input + "\" and you gain money: " + ownedBlocks.get(input).getPrice());
+        increaseMoney(ownedBlocks.get(input).getPrice());
+        ownedBlocks.get(input).setOwner(null);
+        ownedBlocks.remove(input);
+        return true;
+
         //TODO not finished
     }
     public void movePlayer(int stepSize){

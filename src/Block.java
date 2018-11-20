@@ -7,6 +7,16 @@ public class Block {
     private String name;
     private double price;
     private double rent;
+    private Player owner;
+    private ArrayList<Player> visiter;
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
 
     public double getRent() {
         return rent;
@@ -31,8 +41,6 @@ public class Block {
         this.name = name;
     }
 
-    private Player owner;
-    private ArrayList<Player> visiter;
 
     public Block() {
 
@@ -51,14 +59,23 @@ public class Block {
     }
 
     public boolean playTurn(Player player){ //it is boolean for end the game
-
         boolean bankruptcy=false;
+        boolean sellingOption=true;
         printBlock(player);
+
+
+        if(this.owner==null && player.getMoney()<this.getPrice()){
+            System.out.println(player.getName()+" has not enough money to buy "+this.getName()+" block");
+            while(sellingOption && player.getMoney()<this.getPrice()){
+                sellingOption = player.sellOwnedBlock();
+            }
+        }
+
         if(this.owner==null && player.getMoney()>=this.getPrice()){
             purchaseBlock(player);
-        }else if(this.owner==null){
-            System.out.println(player.getName()+" has not enough money to buy "+this.getName()+" block");
-        }else if(this.owner!=player){
+        }
+
+        if(this.owner!=player && this.owner!=null){
             rentBlock(player);
 
         }
@@ -70,8 +87,8 @@ public class Block {
 
     }
     public void printBlock(Player player){
-        String name= (!player.isControlled()) ? player.getName() : "Player "+player.getName()+" and has "+player.getMoney()+" money";
-        System.out.println( name+" in the "+getName()+" block.");
+        String name= (!player.isControlled()) ? player.getName() : "Player "+player.getName();
+        System.out.println( name+" and has "+player.getMoney()+" money  in the "+getName()+" block.");
     }
     public void purchaseBlock(Player player){
 
@@ -104,5 +121,7 @@ public class Block {
                 "\nNow Player"+ player.getName()+" has "+player.getMoney()+" money");
 
     }
+
+
 
 }
