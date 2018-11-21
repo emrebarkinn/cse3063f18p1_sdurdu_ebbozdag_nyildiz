@@ -8,5 +8,5 @@ public class Main {
         gameManager.startGame();
     }
 
-    //deneme denemeler deneme
+
 }

@@ -18,7 +18,7 @@ public class GoToJail extends Block{
         System.out.println(player.getName() + " have to pay penalty money: " + penaltyMoney + "\n Now " + player.getName()
                 + " has " + player.getMoney() + " money.");
         System.out.println("player's position: " +player.getPosition());
-        //TODO send player to player to mapushane
+        //send player to mapushane
         player.setPosition(10);
         return true;
     }

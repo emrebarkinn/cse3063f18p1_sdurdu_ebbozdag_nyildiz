@@ -23,14 +23,21 @@ public class GameManager {
         this.turnMoney = 100;
     }
 
-    public void startGame(){
+    public boolean startGame(){
         //TODO convert this codes into a method and needs error checks
         Scanner scan=new Scanner(System.in);
         System.out.print("Please enter the user name :");
         String userName= scan.nextLine();
         System.out.print("Please enter the total player number between 2 and 8 :");
         playerNum= scan.nextInt();
-        scan.nextLine();
+        //Check player number is between 2 and 8.
+        if(playerNum<2 || playerNum>8){
+            System.out.print("Please enter the total player number between 2 and 8 :");
+            playerNum=scan.nextInt();
+        }
+        else{
+            scan.nextLine();
+        }
         System.out.print("Please enter the initial money :");
         double money= scan.nextDouble();
         System.out.println("Please enter the full turn limit (if any player will reach that fullturn number game will be finished) :");
@@ -51,10 +58,10 @@ public class GameManager {
 
 
 
-
+        return true;
     }
     public void createPlayers(ArrayList<Player> players, String userName, int size, double money){
-        //TODO restrict the creation (3-8 players)
+
         players.add(new Player(""+userName,0+money,0,false, board));
         for (int i=1; i<size;i++){
             players.add(new Player(""+i,money,0,true,board));
@@ -104,7 +111,7 @@ public class GameManager {
                 player.updateFullTurnCount();
                 player.setPosition(player.getPosition() % board.SIZE);
 
-                if(player.getFullTurnCount()<fullTurnNumber) {  //TODO define fullTurnNumber limit instead of using 5
+                if(player.getFullTurnCount()<fullTurnNumber) {  // define fullTurnNumber limit
                     player.increaseMoney(getTurnMoney());
                     System.out.println(player.getName() + " gain turn money: " + turnMoney + "\n Now " + player.getName()
                             + " has " + player.getMoney() + " money.");

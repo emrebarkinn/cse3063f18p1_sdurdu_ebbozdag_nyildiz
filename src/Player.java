@@ -111,7 +111,7 @@ public class Player {
         }
 
         //print owned blocks
-        System.out.println("0) Dont sell any block!");
+        System.out.println("0) Don't sell any block!");
         printOwnedBlocks();
 
         //choose a block to sell or don't sell, if computer plays; sell first owned block
