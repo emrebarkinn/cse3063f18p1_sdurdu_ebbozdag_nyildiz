@@ -10,6 +10,22 @@ public class Block {
     private Player owner;
     private ArrayList<Player> visiter;
 
+    public Block() {
+
+    }
+
+    public Block(int index, String name, double price, double rent) {
+        this.index = index;
+        this.name = name;
+        this.price = price;
+        this.rent = rent;
+        this.owner=null;
+    }
+
+    public Block(int index) {
+        this.index=index;
+    }
+
     public Player getOwner() {
         return owner;
     }
@@ -41,19 +57,6 @@ public class Block {
         this.name = name;
     }
 
-
-    public Block() {
-
-    }
-
-    public Block(int index, String name, double price, double rent) {
-        this.index = index;
-        this.name = name;
-        this.price = price;
-        this.rent = rent;
-        this.owner=null;
-    }
-
     public void playerVisit(Player player){
         visiter.add(player);
     }
@@ -79,6 +82,7 @@ public class Block {
             rentBlock(player);
 
         }
+
         if(player.getMoney()<0)
             bankruptcy=true;
 

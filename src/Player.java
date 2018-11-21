@@ -13,6 +13,7 @@ public class Player {
     private int waiting_time;
     private int fullTurnCount;
     //
+    private Board board;
     private ArrayList<Block> ownedBlocks;
 
 
@@ -21,7 +22,7 @@ public class Player {
 
     }
 
-    public Player(String name, double money, int position, boolean isControlled) {
+    public Player(String name, double money, int position, boolean isControlled, Board board) {
         this.name = name;
         this.money = money;
         this.position = position;
@@ -30,8 +31,18 @@ public class Player {
         this.waiting_time = 0;
         this.ownedBlocks=new ArrayList <Block>();
         this.fullTurnCount=0;
+        this.board = board;
     }
     //TODO add generate random user name function
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     public void increaseMoney(double money){
         this.money+=money;
     }
@@ -101,10 +112,7 @@ public class Player {
 
         //print owned blocks
         System.out.println("0) Dont sell any block!");
-        for(int i = 0; i<ownedBlocks.size(); i++){
-            System.out.print( (i+1) + ") owned block is: " + ownedBlocks.get(i).getName());
-            System.out.println(" price is: " + ownedBlocks.get(i).getPrice() + " and rent is: " + ownedBlocks.get(i).getRent());
-        }
+        printOwnedBlocks();
 
         //choose a block to sell or don't sell, if computer plays; sell first owned block
         Scanner scan = new Scanner(System.in);
@@ -113,18 +121,28 @@ public class Player {
             System.out.println("Choose block number to SELL in above list");
             input = scan.nextInt();
         }
+        else{
+            return false;
+        }
 
         if(input==0){  //"don't sell" option
             return false;
         }
         input--;  //set true index for arraylist
-        System.out.println("You sell the block \"" + input + "\" and you gain money: " + ownedBlocks.get(input).getPrice());
+        System.out.println("You sell the block \"" + ownedBlocks.get(input).getName() + "\" and you gain money: " + ownedBlocks.get(input).getPrice());
         increaseMoney(ownedBlocks.get(input).getPrice());
         ownedBlocks.get(input).setOwner(null);
         ownedBlocks.remove(input);
         return true;
 
-        //TODO not finished
+        //TODO not finished, isControlled sell islemlerine gozden gecir.
+    }
+
+    public void printOwnedBlocks(){
+        for(int i = 0; i<ownedBlocks.size(); i++){
+            System.out.print( (i+1) + ") owned block is: " + ownedBlocks.get(i).getName());
+            System.out.println(" price is: " + ownedBlocks.get(i).getPrice() + " and rent is: " + ownedBlocks.get(i).getRent());
+        }
     }
     public void movePlayer(int stepSize){
         this.position+= stepSize;

@@ -9,6 +9,7 @@ public class JailVisit extends Block {
     @Override
     public boolean playTurn(Player player){
         super.printBlock(player);
+
         return true;
     }
 }

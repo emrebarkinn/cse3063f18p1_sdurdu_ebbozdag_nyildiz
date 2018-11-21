@@ -54,9 +54,10 @@ public class GameManager {
 
     }
     public void createPlayers(ArrayList<Player> players, String userName, int size, double money){
-        players.add(new Player(""+userName,0+money,0,false));
+        //TODO restrict the creation (3-8 players)
+        players.add(new Player(""+userName,0+money,0,false, board));
         for (int i=1; i<size;i++){
-            players.add(new Player(""+i,money,0,true));
+            players.add(new Player(""+i,money,0,true,board));
         }
     }
 

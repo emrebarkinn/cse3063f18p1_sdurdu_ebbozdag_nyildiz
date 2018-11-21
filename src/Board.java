@@ -11,19 +11,30 @@ public class Board {
         blocks.add(new StartingBlock());
         for (int i=1;i<SIZE;i++){
 
-            if(i==10){
-                blocks.add(new GoToJail());
+            if(i==5) {
+                blocks.add(new LuckyCard());
                 continue;
             }
-            if(i==20){
-                blocks.add(new GoToJail());
+            if(i==10){
+                blocks.add(new JailVisit());
+                continue;
+            }
+            if(i==15){
+                blocks.add(new LuckyCard());
+                continue;
+            }
+            if(i==25) {
+                blocks.add(new LuckyCard());
                 continue;
             }
             if(i==30){
                 blocks.add(new GoToJail());
                 continue;
             }
-
+            if(i==35) {
+                blocks.add(new LuckyCard());
+                continue;
+            }
             blocks.add(new Block(i,""+i,300,200));//for now we only create 36 blocks,3 gotojail block  and one startingBlock
         }
     }
