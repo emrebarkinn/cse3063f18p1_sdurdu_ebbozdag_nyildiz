@@ -8,23 +8,23 @@ public class Board {
 
     public Board() {
         blocks=new ArrayList <Block>();
-        blocks.add(new StartingBlock());
+        blocks.add(new StartingBlock(0,"StartingBlock"));
         for (int i=1;i<SIZE;i++){
 
             if(i==5) {
-                blocks.add(new LuckyCard());
+                blocks.add(new LuckyCard(i,"LuckyCard"));
                 continue;
             }
             if(i==10){
-                blocks.add(new JailVisit());
+                blocks.add(new JailVisit(i,"JailVisit"));
                 continue;
             }
             if(i==15){
-                blocks.add(new LuckyCard());
+                blocks.add(new LuckyCard(i,"LuckyCard"));
                 continue;
             }
             if(i==25) {
-                blocks.add(new LuckyCard());
+                blocks.add(new LuckyCard(i,"LuckyCard"));
                 continue;
             }
             if(i==30){
@@ -32,7 +32,7 @@ public class Board {
                 continue;
             }
             if(i==35) {
-                blocks.add(new LuckyCard());
+                blocks.add(new LuckyCard(i,"LuckyCard"));
                 continue;
             }
             blocks.add(new Block(i,""+i,300,200));//for now we only create 36 blocks,3 gotojail block  and one startingBlock

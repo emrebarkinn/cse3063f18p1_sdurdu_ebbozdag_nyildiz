@@ -109,15 +109,16 @@ public class Player {
         if(ownedBlocks.size()==0){      //blockless players can't sell anything
             return false;
         }
-
+        Scanner scan = new Scanner(System.in);
+        int input=1;
         //print owned blocks
-        System.out.println("0) Don't sell any block!");
-        printOwnedBlocks();
+
 
         //choose a block to sell or don't sell, if computer plays; sell first owned block
-        Scanner scan = new Scanner(System.in);
-        int input=2;
+
         if(!isControlled){
+            System.out.println("0) Don't sell any block!");
+            printOwnedBlocks();
             System.out.println("Choose block number to SELL in above list");
             input = scan.nextInt();
         }
@@ -129,7 +130,10 @@ public class Player {
             return false;
         }
         input--;  //set true index for arraylist
-        System.out.println("You sell the block \"" + ownedBlocks.get(input).getName() + "\" and you gain money: " + ownedBlocks.get(input).getPrice());
+        if(!isControlled)
+            System.out.println("You sell the block \"" + ownedBlocks.get(input).getName() + "\" and you gain money: " + ownedBlocks.get(input).getPrice());
+        else
+            System.out.println("Player "+this.getName()+" sell the block \"" + ownedBlocks.get(input).getName() + "\" and "+this.getName()+" gain money: " + ownedBlocks.get(input).getPrice());
         increaseMoney(ownedBlocks.get(input).getPrice());
         ownedBlocks.get(input).setOwner(null);
         ownedBlocks.remove(input);

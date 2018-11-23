@@ -7,11 +7,10 @@ public class LuckyCard extends Block{
     private String description;
 
 
-    public LuckyCard() {
-        super();
-        super.setName("Lucky Card");
-
+    public LuckyCard(int index,String name) {
+        super(index, name);
     }
+
 
     @Override
     public boolean playTurn(Player player){

@@ -9,9 +9,13 @@ public class Block {
     private double rent;
     private Player owner;
     private ArrayList<Player> visiter;
+    public Block(){
 
-    public Block() {
+    }
 
+    public Block(int index,String name) {
+        this.index = index;
+        this.name = name;
     }
 
     public Block(int index, String name, double price, double rent) {
@@ -79,6 +83,10 @@ public class Block {
         }
 
         if(this.owner!=player && this.owner!=null){
+            System.out.println(player.getName()+" has not enough money to pay rent for  "+this.getName()+" block");
+            while(sellingOption&&player.getMoney()<this.getRent()){
+                sellingOption = player.sellOwnedBlock();
+            }
             rentBlock(player);
 
         }

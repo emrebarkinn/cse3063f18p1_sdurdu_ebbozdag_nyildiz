@@ -1,6 +1,6 @@
 public class StartingBlock extends Block {
-    public StartingBlock() {
-    super();
+    public StartingBlock(int index,String name) {
+    super(index, name);
     super.setName("Starting Block");
     }
 

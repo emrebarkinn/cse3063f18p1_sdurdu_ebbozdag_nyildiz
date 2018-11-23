@@ -8,6 +8,7 @@ public class BoardTest {
 
     @Test
     public void moveTest(){
+        player.setPosition(10);
         assertEquals(board.move(player),true);
     }
 

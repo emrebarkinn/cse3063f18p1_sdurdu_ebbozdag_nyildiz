@@ -2,13 +2,14 @@ public class JailVisit extends Block {
 
 
 
-    public JailVisit() {
-        super();
+    public JailVisit(int index,String name) {
+        super(index,name);
+
     }
 
     @Override
     public boolean playTurn(Player player){
-        super.printBlock(player);
+        printBlock(player);
 
         return true;
     }
