@@ -31,17 +31,13 @@ public class PlayerTest {
         assertTrue(String.valueOf(player.isInJail()),inJail);
 
     }
-    //TODO define assertEquals method arguments
-   /* @Test
-    public void sellOwnedBlockTest(){
-
-        double prevMoney = player.getMoney();
-        double salePrice=200;
-        assertEquals(prevMoney+salePrice,player.sellOwnedBlock());
-        }
-    */
+    @Test
+    public void movePlayer(){
 
     }
+
+
+}
 
 
 

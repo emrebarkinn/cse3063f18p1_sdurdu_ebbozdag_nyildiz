@@ -80,7 +80,7 @@ public class GameManager {
         System.out.println("Player " + arr.get(0).getName() + " plays first..");
 
     }
-    public void bubbleSortPlayers(ArrayList<Player> arr){
+    public void bubbleSortPlayers(ArrayList<Player> arr){ //TODO unit test
         boolean swap=true;
         while(swap){
             swap=false;

@@ -3,15 +3,14 @@ public class GoToJail extends Block{
     private int waiting_time;
     private int penaltyMoney;
 
-    public GoToJail() {
-        super();
-        super.setName("Go To Jail");
+    public GoToJail(int index, String name) {
+        super(index, name);
         this.waiting_time=3;
         this.penaltyMoney=100;
     }
 
     @Override
-    public boolean playTurn(Player player){
+    public boolean playTurn(Player player){ //TODO unit test
         super.printBlock(player);
         player.setWaiting_time(waiting_time);
         player.decreaseMoney(penaltyMoney);

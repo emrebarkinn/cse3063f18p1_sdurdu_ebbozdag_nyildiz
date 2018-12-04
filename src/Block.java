@@ -73,7 +73,7 @@ public class Block {
 
         if(this.owner==null && player.getMoney()<this.getPrice()){
             System.out.println(player.getName()+" has not enough money to buy "+this.getName()+" block");
-            while(sellingOption && player.getMoney()<this.getPrice()){
+            while(sellingOption && player.getMoney()<this.getPrice()){ //TODO add money check to player decrease money method
                 sellingOption = player.sellOwnedBlock();
             }
         }
@@ -102,7 +102,7 @@ public class Block {
         String name= (!player.isControlled()) ? player.getName() : "Player "+player.getName();
         System.out.println( name+" and has "+player.getMoney()+" money  in the "+getName()+" block.");
     }
-    public void purchaseBlock(Player player){
+    public void purchaseBlock(Player player){//TODO unit test
 
         Scanner scan =new Scanner(System.in);
         String input="y"; //TODO error check
@@ -121,7 +121,7 @@ public class Block {
 
         }
     }
-    public void rentBlock(Player player){
+    public void rentBlock(Player player){ //TODO unit test
 
         System.out.println("Block "+this.getName()+" has already an owner and owner name is :"+this.owner.getName());
         System.out.println("Player "+ player.getName()+" have to pay "+this.getRent()+" to player "+this.owner.getName());

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Board {
 
@@ -28,32 +29,28 @@ public class Board {
                 continue;
             }
             if(i==30){
-                blocks.add(new GoToJail());
+                blocks.add(new GoToJail(i ,"Go To Jail"));
                 continue;
             }
             if(i==35) {
                 blocks.add(new LuckyCard(i,"LuckyCard"));
                 continue;
             }
-            blocks.add(new Block(i,""+i,300,200));//for now we only create 36 blocks,3 gotojail block  and one startingBlock
+            blocks.add(new Block(i,""+i,300,200));
         }
     }
 
-    public Block getBlock(int index){
-        //TODO not finished
-
-
+    public Block getBlock(int index){ //TODO unit test
         return blocks.get(index);
     }
 
-    public Player moveCalculate(int index){
-        Player player = new Player();
-        return player;
-    }
-
     public boolean move(Player player){
+        if(!player.isControlled()){
+            Scanner scan =new Scanner(System.in);
+            scan.nextLine();  //for debugging
+        }
 
-        return blocks.get(player.getPosition()).playTurn(player);
+        return getBlock(player.getPosition()).playTurn(player);
     }
 
 
