@@ -10,7 +10,7 @@ public class GoToJail extends Block{
     }
 
     @Override
-    public boolean playTurn(Player player){ //TODO unit test
+    public boolean playTurn(Player player){
         super.printBlock(player);
         player.setWaiting_time(waiting_time);
         player.decreaseMoney(penaltyMoney);

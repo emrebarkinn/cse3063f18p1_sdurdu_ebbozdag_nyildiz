@@ -8,14 +8,15 @@ public class BlockTest {
     Player owner = new Player();
 
     @Test
-    public void purchaseBlockTest(){ //TODO : This method take input from player with scanner.
+    public void purchaseBlockTest(){ //TODO : This method give null pointer exception
 
         player.setMoney(100);
-        block.setOwner(null);
         block.setPrice(50);
+
         block.purchaseBlock(player);
 
         assertTrue(player.getMoney()==50);
+        assertTrue(block.getOwner()==player);
 
 
 

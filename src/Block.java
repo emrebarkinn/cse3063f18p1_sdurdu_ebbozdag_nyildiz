@@ -87,7 +87,7 @@ public class Block {
         }
 
         if(this.owner==null && player.getMoney()>=this.getPrice()){
-            purchaseBlock(player);
+            askToPlayerToPurchase(player);
         }
 
         if(this.owner!=player && this.owner!=null){
@@ -110,8 +110,7 @@ public class Block {
         String name= (!player.isControlled()) ? player.getName() : "Player "+player.getName();
         System.out.println( name+" and has "+player.getMoney()+" money  in the "+getName()+" block.");
     }
-    public void purchaseBlock(Player player){//TODO unit test
-
+    public void askToPlayerToPurchase(Player player){
         Scanner scan =new Scanner(System.in);
         String input="y"; //TODO error check
 
@@ -120,14 +119,19 @@ public class Block {
             System.out.println("Do you want to purchase " + this.getName() + " block ? y/n");
             input =scan.next();
         }
-        if(input.equals("y") || input.equals("Y")) {
+        if(input.equals("y") || input.equals("Y")){
+            purchaseBlock(player);
+        }
+
+    }
+    public void purchaseBlock(Player player){
+
             player.addOwnedBlock(this);
             this.owner = player;
             player.decreaseMoney(this.getPrice());
             System.out.println(player.getName()+" just bought the block "+this.getName()+
                     "\nNow Player"+ player.getName()+" has "+player.getMoney()+" money");
 
-        }
     }
     public void rentBlock(Player player){
 
