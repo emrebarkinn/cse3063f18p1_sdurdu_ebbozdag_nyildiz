@@ -30,6 +30,14 @@ public class Block {
         this.index=index;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public Player getOwner() {
         return owner;
     }
@@ -121,7 +129,7 @@ public class Block {
 
         }
     }
-    public void rentBlock(Player player){ //TODO unit test
+    public void rentBlock(Player player){
 
         System.out.println("Block "+this.getName()+" has already an owner and owner name is :"+this.owner.getName());
         System.out.println("Player "+ player.getName()+" have to pay "+this.getRent()+" to player "+this.owner.getName());

@@ -40,7 +40,7 @@ public class Board {
         }
     }
 
-    public Block getBlock(int index){ //TODO unit test
+    public Block getBlock(int index){
         return blocks.get(index);
     }
 
