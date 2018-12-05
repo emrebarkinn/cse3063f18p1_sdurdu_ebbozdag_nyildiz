@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 public class BlockTest {
 
     Block block = new Block();
-    Player player = new Player();
+    Player player=new Player("eee",100,10,true,null);
     Player owner = new Player();
 
     @Test
@@ -12,11 +12,11 @@ public class BlockTest {
 
         player.setMoney(100);
         block.setPrice(50);
-
+        block.setName("Test");
         block.purchaseBlock(player);
 
-        assertTrue(player.getMoney()==50);
-        assertTrue(block.getOwner()==player);
+        assertEquals(50,player.getMoney(),0);
+        assertEquals(player,block.getOwner());
 
 
 

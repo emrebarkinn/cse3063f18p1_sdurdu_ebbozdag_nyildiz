@@ -51,10 +51,17 @@ public class GameManager {
             condCheck=iteration();
 
         }
+        bubbleSortPlayersWealth(players);
+        int i=1;
+        for(Player player: players){
 
+            System.out.println(i+". Player name : "+player.getName()+" Money: "+ player.getMoney());
+            player.printOwnedBlocks();
+            System.out.println("Wealth:"+(player.sumOfOwnedBlocks()+player.getMoney()));
+            i++;
+        }
         //TODO add owned blocks prices to final players
-        for(int i=0;i<players.size();i++)
-            System.out.println("Player name : "+players.get(i).getName()+" Money: "+ players.get(i).getMoney());
+
 
 
 
@@ -91,6 +98,20 @@ public class GameManager {
                 }
             }
         }
+
+    }
+    public void bubbleSortPlayersWealth(ArrayList<Player> arr){
+        boolean swap=true;
+        while(swap){
+            swap=false;
+            for(int i=0; i<arr.size()-1; i++){
+                if(arr.get(i).sumOfOwnedBlocks()+arr.get(i).getMoney()<arr.get(i+1).sumOfOwnedBlocks()+arr.get(i+1).getMoney()) {
+                    Collections.swap(arr, i, i + 1);
+                    swap = true;
+                }
+            }
+        }
+
     }
     public ArrayList<Player> getPlayers() {
         return players;
@@ -102,9 +123,14 @@ public class GameManager {
             player.updateInJail();
             if(player.isInJail()){
                 player.setWaiting_time(player.getWaiting_time()-1);
-
+                System.out.println("Player:"+player.getName()+" is in jail. Remaining jail time is :"+player.getWaiting_time());
                 continue;
             }
+            if(player.isBankruptcy()){
+                System.out.println("Game over :((");
+                return false;
+            }
+
             player.movePlayer(rollTurnDice());
             if(player.getPosition()>=board.SIZE) {
 
@@ -115,13 +141,16 @@ public class GameManager {
                     player.increaseMoney(getTurnMoney());
                     System.out.println(player.getName() + " gain turn money: " + turnMoney + "\n Now " + player.getName()
                             + " has " + player.getMoney() + " money.");
+                }else{
+                    System.out.println("Full turn number is "+this.fullTurnNumber+". turn is over so Game Over!");
+                    return false;
                 }
             }
             System.out.println("\n");
             System.out.println("For " + player.getName() + " dice :" + die1.getFace() + " " + die2.getFace());
 
 
-            if(!board.move(player)) return false;
+            board.move(player);
         }
         return true;
     }

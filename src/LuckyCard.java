@@ -13,10 +13,10 @@ public class LuckyCard extends Block{
 
 
     @Override
-    public boolean playTurn(Player player){
+    public void playTurn(Player player){
         super.printBlock(player);
         takeACard(player);
-        return true;
+
     }
 
     public void takeACard(Player player){ //TODO unit test

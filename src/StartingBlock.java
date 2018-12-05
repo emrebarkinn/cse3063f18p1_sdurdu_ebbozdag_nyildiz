@@ -5,8 +5,7 @@ public class StartingBlock extends Block {
     }
 
     @Override
-    public boolean playTurn(Player player) {
+    public void playTurn(Player player) {
         printBlock(player);
-        return true;
     }
 }

@@ -10,16 +10,16 @@ public class GoToJail extends Block{
     }
 
     @Override
-    public boolean playTurn(Player player){
+    public void playTurn(Player player){
         super.printBlock(player);
         player.setWaiting_time(waiting_time);
-        player.decreaseMoney(penaltyMoney);
+        player.mandotoryPay(penaltyMoney);
         System.out.println(player.getName() + " have to pay penalty money: " + penaltyMoney + "\n Now " + player.getName()
                 + " has " + player.getMoney() + " money.");
         System.out.println("player's position: " +player.getPosition());
         //send player to mapushane
         player.setPosition(10);
-        return true;
+
     }
 
     public int getJail_visit_index() {

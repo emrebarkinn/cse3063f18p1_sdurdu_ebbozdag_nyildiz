@@ -73,38 +73,16 @@ public class Block {
         visiter.add(player);
     }
 
-    public boolean playTurn(Player player){ //it is boolean for end the game
-        boolean bankruptcy=false;
-        boolean sellingOption=true;
+    public void playTurn(Player player){ //it is boolean for end the game
+
         printBlock(player);
-
-
-        if(this.owner==null && player.getMoney()<this.getPrice()){
-            System.out.println(player.getName()+" has not enough money to buy "+this.getName()+" block");
-            while(sellingOption && player.getMoney()<this.getPrice()){ //TODO add money check to player decrease money method
-                sellingOption = player.sellOwnedBlock();
-            }
-        }
-
-        if(this.owner==null && player.getMoney()>=this.getPrice()){
+        if(this.owner==null){
             askToPlayerToPurchase(player);
         }
-
         if(this.owner!=player && this.owner!=null){
             System.out.println(player.getName()+" has not enough money to pay rent for  "+this.getName()+" block");
-            while(sellingOption&&player.getMoney()<this.getRent()){
-                sellingOption = player.sellOwnedBlock();
-            }
             rentBlock(player);
-
         }
-
-        if(player.getMoney()<0)
-            bankruptcy=true;
-
-
-        return !bankruptcy;
-
     }
     public void printBlock(Player player){
         String name= (!player.isControlled()) ? player.getName() : "Player "+player.getName();
@@ -128,7 +106,7 @@ public class Block {
 
             player.addOwnedBlock(this);
             this.owner = player;
-            player.decreaseMoney(this.getPrice());
+            player.optionalPay(this.getPrice());
             System.out.println(player.getName()+" just bought the block "+this.getName()+
                     "\nNow Player"+ player.getName()+" has "+player.getMoney()+" money");
 
@@ -139,7 +117,7 @@ public class Block {
         System.out.println("Player "+ player.getName()+" have to pay "+this.getRent()+" to player "+this.owner.getName());
 
 
-        player.decreaseMoney(this.rent);
+        player.mandotoryPay(this.getRent());
         this.owner.increaseMoney(this.rent);
         System.out.println(player.getName()+" just pay a rent ("+this.getRent()+") for block "+this.getName()+
                 "\nNow Player"+ player.getName()+" has "+player.getMoney()+" money");

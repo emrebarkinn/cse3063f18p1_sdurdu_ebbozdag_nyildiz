@@ -12,6 +12,8 @@ public class Player {
     private int initialDiceValue;
     private int waiting_time;
     private int fullTurnCount;
+    private boolean bankruptcy;
+    private double wealth;
     //
     private Board board;
     private ArrayList<Block> ownedBlocks;
@@ -32,6 +34,7 @@ public class Player {
         this.ownedBlocks=new ArrayList <Block>();
         this.fullTurnCount=0;
         this.board = board;
+        this.bankruptcy=false;
     }
     //TODO add generate random user name function
 
@@ -43,12 +46,49 @@ public class Player {
         this.board = board;
     }
 
+    public boolean isBankruptcy() {
+        if ((this.getMoney()<0)) bankruptcy = true;
+        else bankruptcy = false;
+        return bankruptcy;
+    }
+
+    public double getWealth() {
+        calculateWealth();
+        return wealth;
+    }
+
     public void increaseMoney(double money){
         this.money+=money;
+
     }
 
     public void decreaseMoney(double money){
         this.money-=money;
+        if(money<0)
+            this.bankruptcy=true;
+
+    }
+    public void mandotoryPay(double money){
+        boolean cond=true;
+        while(this.money-money<0&&cond){
+            if(getWealth()-money>=0){
+                System.out.println("You dont have enough money to pay "+money+" but you can get that money by selling your blocks.");
+                cond=this.sellOwnedBlock();
+            }else
+                cond=false;
+        }
+        decreaseMoney(money);
+    }
+    public void optionalPay(double money){
+
+        if(this.money-money>=0){
+            decreaseMoney(money);
+            return;
+        }
+        System.out.println("You don't have enough money to pay "+money);
+    }
+    public void calculateWealth(){
+        this.wealth=this.money+sumOfOwnedBlocks();
     }
 
 
@@ -147,6 +187,14 @@ public class Player {
             System.out.print( (i+1) + ") owned block is: " + ownedBlocks.get(i).getName());
             System.out.println(" price is: " + ownedBlocks.get(i).getPrice() + " and rent is: " + ownedBlocks.get(i).getRent());
         }
+    }
+    public double sumOfOwnedBlocks(){
+        double sum=0;
+        for(Block block:ownedBlocks){
+            sum+=block.getPrice();
+
+        }
+        return sum;
     }
     public void movePlayer(int stepSize){
         this.position+= stepSize;
