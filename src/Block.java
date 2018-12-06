@@ -121,12 +121,15 @@ public class Block {
 
     }
     public void purchaseBlock(Player player){
+            if(player.optionalPay(this.getPrice())){
+
 
             player.addOwnedBlock(this);
             this.owner = player;
-            player.optionalPay(this.getPrice());
+
             System.out.println(player.getName()+" just bought the block "+this.getName()+
                     "\nNow Player "+ player.getName()+" has "+player.getMoney()+" money");
+            }
 
     }
     public void rentBlock(Player player){

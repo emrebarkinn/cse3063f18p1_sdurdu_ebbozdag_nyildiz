@@ -45,6 +45,14 @@ public class Player {
         this.board = board;
     }
 
+    public ArrayList<Block> getOwnedBlocks() {
+        return ownedBlocks;
+    }
+
+    public void setOwnedBlocks(ArrayList<Block> ownedBlocks) {
+        this.ownedBlocks = ownedBlocks;
+    }
+
     public boolean isBankruptcy() {
         if ((this.getMoney()<0)) bankruptcy = true;
         else bankruptcy = false;
@@ -78,14 +86,16 @@ public class Player {
                 cond=false;
         }
         decreaseMoney(money);
+
     }
-    public void optionalPay(double money){
+    public boolean optionalPay(double money){
 
         if(this.money-money>=0){
             decreaseMoney(money);
-            return;
+            return true;
         }
         System.out.println("You don't have enough money to pay "+money);
+        return false;
     }
     public void calculateWealth(){
         this.wealth=this.money+sumOfOwnedBlocks();

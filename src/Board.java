@@ -21,7 +21,7 @@ public class Board {
         blocks.add(new TaxBlock(4, "Income Tax", 100));
 
         //blocks.add(new LuckyCard(5, "Lucky Card"));
-        blocks.add(new Block(5, "Train", 200, 150));               //olusturulmadı
+        blocks.add(new RailWay(5, "Sirkeci Railway", 200, 50));               //olusturulmadı
 
         blocks.add(new Block(6, "Adana",100, 60));      //light blue
         blocks.add(new LuckyCard(7, "Lucky Card"));
@@ -37,7 +37,7 @@ public class Board {
         blocks.add(new Block(14, "Çorum",160,120));      //pink
 
         //blocks.add(new LuckyCard(15, "Lucky Card"));
-        blocks.add(new Block(15, "Airport", 300, 200));         //olusturulmadı
+        blocks.add(new RailWay(15, "Pendik Railway", 200, 50));         //olusturulmadı
 
         blocks.add(new Block(16, "Mersin",180,140));     //orange
 
@@ -56,7 +56,7 @@ public class Board {
         blocks.add(new Block(24, "Trabzon",240,200));   //red
 
         //blocks.add(new LuckyCard(25, "Lucky Card"));
-        blocks.add(new Block(25, "Metrobus",250,150));              //olusturulmadı
+        blocks.add(new RailWay(25, "Bakırköy Railway",200,50));              //olusturulmadı
 
         blocks.add(new Block(26, "Malatya",260,220));   //yellow
         blocks.add(new Block(27, "Elazığ",260,220));    //yellow
@@ -75,7 +75,7 @@ public class Board {
         blocks.add(new Block(34, "İzmir",320,280));         //green
 
         //blocks.add(new LuckyCard(35, "Lucky Card"));
-        blocks.add(new Block(35, "Subway", 270, 180));               //??
+        blocks.add(new RailWay(35, "Haydarpaşa", 200, 50));               //??
 
         blocks.add(new LuckyCard(36, "Lucky Card"));
         blocks.add(new Block(37, "İstanbul",350,300));      //blue
