@@ -6,9 +6,9 @@ import static org.junit.Assert.*;
 
 public class GameManagerTest {
 
-    Player player1 = new Player();
-    Player player2 = new Player();
-    Player player3 = new Player();
+    Player player1 = new Player("aaa",200,30,true,null);
+    Player player2 = new Player("bbb",200,30,true,null);
+    Player player3 = new Player("ccc",200,30,true,null);
     Die die1 = new Die();
     Die die2 = new Die();
     GameManager gameManager = new GameManager();
@@ -52,7 +52,8 @@ public class GameManagerTest {
     }
 
     @Test
-    public void bubbleSortPlayersWealthTest(){ //TODO: Null pointer exception
+    public void bubbleSortPlayersWealthTest(){
+
 
         player1.addOwnedBlock(new Block(15,"aaa",200,0));
         player1.addOwnedBlock(new Block(17,"abc",150,0));
