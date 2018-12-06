@@ -16,6 +16,7 @@ public class GameManagerTest {
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<Player> sortedPlayers =new ArrayList<>();
 
+
     @Test
     public void bubbleSortTest(){
 
@@ -49,6 +50,30 @@ public class GameManagerTest {
         assertEquals(  gameManager.rollTurnDice(),8);
 
     }
+
+    @Test
+    public void bubbleSortPlayersWealthTest(){ //TODO: Null pointer exception
+
+        player1.addOwnedBlock(new Block(15,"aaa",200,0));
+        player1.addOwnedBlock(new Block(17,"abc",150,0));
+        player2.addOwnedBlock(new Block(10,"bbb",100,0));
+        player2.addOwnedBlock(new Block(21,"bcd",200,0));
+        player3.addOwnedBlock(new Block(5,"ccc",300,0));
+        player3.addOwnedBlock(new Block(32,"cde",350,0));
+
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+
+        gameManager.bubbleSortPlayersWealth(players);
+
+        sortedPlayers.add(player3);
+        sortedPlayers.add(player1);
+        sortedPlayers.add(player2);
+
+        assertEquals(players,sortedPlayers);
+    }
+
 
 
 }
