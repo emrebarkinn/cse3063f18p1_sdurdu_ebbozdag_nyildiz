@@ -82,7 +82,6 @@ public class Block {
             askToPlayerToPurchase(player);
         }
         if(this.owner!=player && this.owner!=null){
-            System.out.println(player.getName()+" has not enough money to pay rent for  "+this.getName()+" block");
             rentBlock(player);
         }
     }

@@ -19,7 +19,7 @@ public class LuckyCard extends Block{
 
     }
 
-    public void takeACard(Player player){ //TODO unit test
+    public void takeACard(Player player){ 
 
         random = new Random();
         type=random.nextInt(3)+1;
@@ -32,9 +32,10 @@ public class LuckyCard extends Block{
                 player.getBoard().move(player);
                 break;
 
-            case 2 : description="Happy Birthday! All players must pay to you 200";
+            case 2 : description="Happy Birthday! We just give you 200";
                 System.out.println(description);
-                //TODO para ekleme islemlerini yap
+                player.increaseMoney(200);
+
                 break;
             case 3 : description="Dept Card! You must pay 100 for traffic dept.";
                 System.out.println(description);

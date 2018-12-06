@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
-
     private String name;
     private double money;
     private int position;
@@ -17,6 +16,7 @@ public class Player {
     //
     private Board board;
     private ArrayList<Block> ownedBlocks;
+
 
 
 
@@ -36,7 +36,6 @@ public class Player {
         this.board = board;
         this.bankruptcy=false;
     }
-    //TODO add generate random user name function
 
     public Board getBoard() {
         return board;
@@ -178,7 +177,6 @@ public class Player {
         ownedBlocks.remove(input);
         return true;
 
-        //TODO not finished, isControlled sell islemlerine gozden gecir.
     }
 
     public void printOwnedBlocks(){

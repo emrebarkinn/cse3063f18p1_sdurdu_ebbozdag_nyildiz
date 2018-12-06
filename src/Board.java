@@ -10,7 +10,6 @@ public class Board {
     public Board() {
         blocks=new ArrayList <Block>();
 
-        //TODO kamu fonu tren vs. karar ver
         blocks.add(new StartingBlock(0,"StartingBlock"));
         blocks.add(new Block(1, "Antalya",60,20));    //brown
 
@@ -123,11 +122,6 @@ public class Board {
     }
 
     public void move(Player player){
-        if(!player.isControlled()){
-            Scanner scan =new Scanner(System.in);
-            scan.nextLine();  //for debugging
-        }
-
         getBlock(player.getPosition()).playTurn(player);
     }
 

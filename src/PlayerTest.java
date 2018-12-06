@@ -5,9 +5,14 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
 
+    Player player ;
     public double money;
 
-    Player player = new Player();
+    @Before
+    public void setUp(){
+        player=new Player("eee",200,10,true,null);
+        player.addOwnedBlock(new Block(15,"aaa",200,0));
+    }
 
     @Test
     public void decreaseMoneyTest(){
@@ -37,6 +42,15 @@ public class PlayerTest {
         player.setPosition(12);
         player.movePlayer(5);
         assertTrue(player.getPosition()==17);
+
+    }
+    @Test
+    public void sellOwnedBlockTest(){
+
+
+
+        player.sellOwnedBlock();
+        assertEquals(player.getMoney(),400,0);
 
     }
 

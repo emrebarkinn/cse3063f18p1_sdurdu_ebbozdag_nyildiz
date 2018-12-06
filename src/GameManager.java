@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class GameManager {
-
+    private String[] names={"George","Kazım","Stacy","Gwen","Slevin","Michael","Stephan","Jean","Christina","Müslüm"};
     private ArrayList<Player> players;
     private Player winner;
     private Board board;
@@ -43,7 +45,6 @@ public class GameManager {
         System.out.println("Please enter the full turn limit (if any player will reach that fullturn number game will be finished) :");
         fullTurnNumber=scan.nextInt();
 
-        //TODO to here
         createPlayers(players,userName,playerNum,money);
         determineOrder(players);
         boolean condCheck=true;
@@ -60,7 +61,6 @@ public class GameManager {
             System.out.println("Wealth:"+(player.sumOfOwnedBlocks()+player.getMoney()));
             i++;
         }
-        //TODO add owned blocks prices to final players
 
 
 
@@ -71,7 +71,7 @@ public class GameManager {
 
         players.add(new Player(""+userName,0+money,0,false, board));
         for (int i=1; i<size;i++){
-            players.add(new Player(""+i,money,0,true,board));
+            players.add(new Player(""+getRandomName(),0+money,0,true,board));
         }
     }
 
@@ -120,6 +120,11 @@ public class GameManager {
     public boolean iteration(){
 
         for(Player player: players){
+            try {
+                TimeUnit.MILLISECONDS.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             player.updateInJail();
             if(player.isInJail()){
                 player.setWaiting_time(player.getWaiting_time()-1);
@@ -132,6 +137,7 @@ public class GameManager {
             }
 
             player.movePlayer(rollTurnDice());
+            System.out.println("For " + player.getName() + " dice :" + die1.getFace() + " " + die2.getFace());
             if(player.getPosition()>=board.SIZE) {
 
                 player.updateFullTurnCount();
@@ -147,14 +153,28 @@ public class GameManager {
                 }
             }
             System.out.println("\n");
-            System.out.println("For " + player.getName() + " dice :" + die1.getFace() + " " + die2.getFace());
+
 
 
             board.move(player);
         }
         return true;
     }
+    public String getRandomName(){
+        Random r = new Random();
+        boolean cond=true;
+        String returnName;
+        int i=0;
+        while(cond){
+            i=r.nextInt(10);
+            if(!names[i].equals(""))
+                cond=false;
 
+        }
+        returnName=names[i];
+        names[i]="";
+        return returnName;
+    }
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
