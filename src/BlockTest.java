@@ -8,7 +8,7 @@ public class BlockTest {
     Player owner = new Player();
 
     @Test
-    public void purchaseBlockTest(){ //TODO : This method give null pointer exception
+    public void purchaseBlockTest(){
 
         player.setMoney(100);
         block.setPrice(50);

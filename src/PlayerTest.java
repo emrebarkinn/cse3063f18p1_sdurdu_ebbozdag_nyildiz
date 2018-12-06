@@ -32,14 +32,13 @@ public class PlayerTest {
 
     }
     @Test
-    public void movePlayer(){
+    public void movePlayerTest(){
 
         player.setPosition(12);
         player.movePlayer(5);
         assertTrue(player.getPosition()==17);
 
     }
-
 
 }
 

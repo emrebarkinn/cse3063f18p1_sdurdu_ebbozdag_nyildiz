@@ -52,6 +52,7 @@ public class Player {
         return bankruptcy;
     }
 
+
     public double getWealth() {
         calculateWealth();
         return wealth;
@@ -161,9 +162,6 @@ public class Player {
             printOwnedBlocks();
             System.out.println("Choose block number to SELL in above list");
             input = scan.nextInt();
-        }
-        else{
-            return false;
         }
 
         if(input==0){  //"don't sell" option
