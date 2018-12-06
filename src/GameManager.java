@@ -1,8 +1,5 @@
-import java.util.ArrayList;
+import java.util.*;
 
-import java.util.Collections;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class GameManager {
@@ -33,15 +30,17 @@ public class GameManager {
         System.out.print("Please enter the total player number between 2 and 8 :");
         playerNum= scan.nextInt();
         //Check player number is between 2 and 8.
-        if(playerNum<2 || playerNum>8){
+        while(playerNum<2 || playerNum>8){
             System.out.print("Please enter the total player number between 2 and 8 :");
             playerNum=scan.nextInt();
         }
-        else{
-            scan.nextLine();
-        }
+        scan.nextLine();
+        double money;
         System.out.print("Please enter the initial money :");
-        double money= scan.nextDouble();
+
+
+        money= scan.nextDouble();
+
         System.out.println("Please enter the full turn limit (if any player will reach that fullturn number game will be finished) :");
         fullTurnNumber=scan.nextInt();
 

@@ -163,7 +163,6 @@ public class Player {
             input = scan.nextInt();
         }
 
-
         if(input==0){  //"don't sell" option
             return false;
         }

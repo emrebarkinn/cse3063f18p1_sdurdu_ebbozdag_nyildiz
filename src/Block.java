@@ -91,16 +91,33 @@ public class Block {
     }
     public void askToPlayerToPurchase(Player player){
         Scanner scan =new Scanner(System.in);
-        String input="y"; //TODO error check
-
+        String input="y";
+        boolean cond=true;
         if(!player.isControlled()) {
             System.out.println("Block "+this.getName()+" price is :" + this.getPrice()+" and rent price:"+this.getRent());
             System.out.println("Do you want to purchase " + this.getName() + " block ? y/n");
             input =scan.next();
         }
-        if(input.equals("y") || input.equals("Y")){
-            purchaseBlock(player);
+        while(cond){
+
+            switch (input){
+                case "y":
+                case "Y":
+                    purchaseBlock(player);
+                    cond=false;
+                    break;
+                case "n":
+                case "N":
+                    cond=false;
+                    break;
+                default:
+                    System.out.println("Invalid input!! Please enter y/n");
+                    cond=true;
+                    break;
+            }
         }
+
+
 
     }
     public void purchaseBlock(Player player){
