@@ -24,7 +24,7 @@ public class LuckyCard extends Block{
         random = new Random();
         type=random.nextInt(3)+1;
 
-        switch (type){ //TODO jail free card
+        switch (type){
 
             case 1 : description=" You took Jail Card.. You have to going to jail";
                 System.out.println(description);

@@ -19,34 +19,61 @@ public class GameManager {
         this.die1 = new Die();
         this.die2 = new Die();
         this.board=new Board();
-        this.turnMoney = 100;
+        this.turnMoney = 150;
     }
 
     public boolean startGame(){
-        //TODO convert this codes into a method and needs error checks
+        boolean condCheck=true;
         Scanner scan=new Scanner(System.in);
         System.out.print("Please enter the user name :");
         String userName= scan.nextLine();
+
         System.out.print("Please enter the total player number between 2 and 8 :");
-        playerNum= scan.nextInt();
-        //Check player number is between 2 and 8.
-        while(playerNum<2 || playerNum>8){
-            System.out.print("Please enter the total player number between 2 and 8 :");
-            playerNum=scan.nextInt();
+        while(condCheck){           //check the input is an integer and between 2 and 8
+            try{
+                playerNum= scan.nextInt();
+                if(playerNum<2 || playerNum>8)
+                    throw new InputMismatchException();
+                else
+                    condCheck=false;
+
+            }catch(InputMismatchException e){
+                System.out.print("Invalid input! Please enter the total player number between 2 and 8 :");
+                scan.nextLine();
+            }
         }
-        scan.nextLine();
-        double money;
+
+        double money = 0;
         System.out.print("Please enter the initial money :");
+        condCheck=true;
+        while(condCheck){       //check the money input is a double number
+            try{
+                money= scan.nextDouble();
+                condCheck=false;
 
+            }catch(InputMismatchException e){
+                System.out.print("Invalid input! Please enter the initial money: ");
+                scan.nextLine();
 
-        money= scan.nextDouble();
-
+            }
+        }
+        condCheck = true;
         System.out.println("Please enter the full turn limit (if any player will reach that fullturn number game will be finished) :");
-        fullTurnNumber=scan.nextInt();
+        while(condCheck){       //check the full turn limit input is a double number
+            try{
+                fullTurnNumber= scan.nextInt();
+                condCheck=false;
 
+            }catch(InputMismatchException e){
+                System.out.print("Invalid input! Please enter the full turn limit: ");
+                scan.nextLine();
+
+            }
+        }
+
+        condCheck = true;
         createPlayers(players,userName,playerNum,money);
         determineOrder(players);
-        boolean condCheck=true;
         while(condCheck){
             condCheck=iteration();
 
@@ -99,7 +126,7 @@ public class GameManager {
         }
 
     }
-    public void bubbleSortPlayersWealth(ArrayList<Player> arr){
+    public void bubbleSortPlayersWealth(ArrayList<Player> arr){  //to determine final winner list
         boolean swap=true;
         while(swap){
             swap=false;
@@ -119,7 +146,7 @@ public class GameManager {
     public boolean iteration(){
 
         for(Player player: players){
-            try {
+            try {                           //creating game flow
                 TimeUnit.MILLISECONDS.sleep(700);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -136,14 +163,14 @@ public class GameManager {
             }
 
             player.movePlayer(rollTurnDice());
-            System.out.println("For " + player.getName() + " dice :" + die1.getFace() + " " + die2.getFace());
+            System.out.println("\nFor " + player.getName() + " dice :" + die1.getFace() + " " + die2.getFace());
             if(player.getPosition()>=board.SIZE) {
 
                 player.updateFullTurnCount();
                 player.setPosition(player.getPosition() % board.SIZE);
 
                 if(player.getFullTurnCount()<fullTurnNumber) {  // define fullTurnNumber limit
-                    player.increaseMoney(getTurnMoney());
+                    player.increaseMoney(getTurnMoney());       //give all players the Full Turn Prize (starting block prize)
                     System.out.println(player.getName() + " gain turn money: " + turnMoney + "\n Now " + player.getName()
                             + " has " + player.getMoney() + " money.");
                 }else{
@@ -151,10 +178,7 @@ public class GameManager {
                     return false;
                 }
             }
-            System.out.println("\n");
-
-
-
+            System.out.println();
             board.move(player);
         }
         return true;
@@ -201,7 +225,7 @@ public class GameManager {
         return die1.getFace()+die2.getFace();
     }
 
-    public int getTurnMoney() {
+    public int getTurnMoney() {     //get starting block or full turn prize
         return turnMoney;
     }
 
