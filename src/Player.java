@@ -97,8 +97,10 @@ public class Player {
             return true;
         }
         if(this.getWealth()>=money){
-            sellOwnedBlock();
-            return optionalPay(money);
+            if(sellOwnedBlock())
+                return optionalPay(money);
+            else
+                return false;
         }
         System.out.println("You don't have enough money to pay "+money);
         return false;
