@@ -8,7 +8,6 @@ public class Block {
     private double price;
     private double rent;
     private Player owner;
-    private ArrayList<Player> visiter;
     public Block(){
 
     }
@@ -69,9 +68,6 @@ public class Block {
         this.name = name;
     }
 
-    public void playerVisit(Player player){
-        visiter.add(player);
-    }
 
     public void playTurn(Player player){ //it is boolean for end the game
         printBlock(player);
@@ -114,6 +110,7 @@ public class Block {
                 default:
                     System.out.println("Invalid input!! Please enter y/n");
                     cond=true;
+                    input =scan.next();
                     break;
             }
         }
@@ -122,15 +119,20 @@ public class Block {
 
     }
     public void purchaseBlock(Player player){
-            if(player.optionalPay(this.getPrice())){
+            if(player.getMoney()>=this.getRent()){
+                if(player.optionalPay(this.getPrice())){
 
 
-            player.addOwnedBlock(this);
-            this.owner = player;
+                player.addOwnedBlock(this);
+                this.owner = player;
 
-            System.out.println(player.getName()+" just bought the block "+this.getName()+
-                    "\nNow Player "+ player.getName()+" has "+player.getMoney()+" money");
+                System.out.println(player.getName()+" just bought the block "+this.getName()+
+                        "\nNow Player "+ player.getName()+" has "+player.getMoney()+" money");
+                }
+            }else{
+                System.out.println("You don't have enough money to buy this block");
             }
+
 
     }
     public void rentBlock(Player player){

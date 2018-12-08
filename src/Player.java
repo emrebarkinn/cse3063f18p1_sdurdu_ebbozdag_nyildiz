@@ -13,6 +13,7 @@ public class Player {
     private int fullTurnCount;
     private boolean bankruptcy;
     private double wealth;
+    private int jailCardCount;
     //
     private Board board;
     private ArrayList<Block> ownedBlocks;
@@ -35,6 +36,7 @@ public class Player {
         this.fullTurnCount=0;
         this.board = board;
         this.bankruptcy=false;
+        this.jailCardCount=0;
     }
 
     public Board getBoard() {
@@ -93,6 +95,10 @@ public class Player {
         if(this.money-money>=0){
             decreaseMoney(money);
             return true;
+        }
+        if(this.getWealth()>=money){
+            sellOwnedBlock();
+            return optionalPay(money);
         }
         System.out.println("You don't have enough money to pay "+money);
         return false;
@@ -177,6 +183,10 @@ public class Player {
             return false;
         }
         input--;  //set true index for arraylist
+        if(ownedBlocks.size()<=input || input<0){
+            System.out.println("Wrong input please enter between 0 and "+ownedBlocks.size()+" !!");
+            return sellOwnedBlock();
+        }
         if(!isControlled)
             System.out.println("You sell the block \"" + ownedBlocks.get(input).getName() + "\" and you gain money: " + ownedBlocks.get(input).getPrice());
         else
@@ -222,7 +232,14 @@ public class Player {
         this.initialDiceValue = initialDiceValue;
     }
 
+    public int getJailCardCount() {
+        return jailCardCount;
+    }
 
-
-
+    public void decreaseJailCardCount() {
+        this.jailCardCount--;
+    }
+    public void increaseJailCardCount() {
+        this.jailCardCount++;
+    }
 }

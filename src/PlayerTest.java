@@ -87,7 +87,13 @@ public class PlayerTest {
         assertTrue(player.getMoney()==0);
 
     }
+    @Test
+    public void optionalPayTest(){
+        player.optionalPay(300);
+        System.out.println(player.getMoney());
+        assertTrue(player.getMoney()==100);
 
+    }
     @Test
     public void sumOfOwnedBlocksTest(){
         player.sumOfOwnedBlocks();

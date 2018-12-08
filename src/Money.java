@@ -18,6 +18,7 @@ public class Money {
         return currency;
     }
 
+
     public void setCurrency(String currency) {
         this.currency = currency;
     }

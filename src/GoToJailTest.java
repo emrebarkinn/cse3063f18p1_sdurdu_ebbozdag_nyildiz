@@ -19,6 +19,20 @@ public class GoToJailTest {
         assertTrue(player.getWaiting_time()==3);
         assertTrue(player.getMoney()==200);
 
+        player.setWaiting_time(0);
+        player.setMoney(300);
+        player.increaseJailCardCount();
+
+        goToJail.playTurn(player);  //player will use jail free card
+
+        assertTrue(player.getWaiting_time()==0);
+        assertTrue(player.getMoney()==300);
+
+        goToJail.playTurn(player);  //now player don't have jail free card. Player will get the penalty.
+
+        assertTrue(player.getWaiting_time()==3);
+        assertTrue(player.getMoney()==200);
+
 
     }
 }

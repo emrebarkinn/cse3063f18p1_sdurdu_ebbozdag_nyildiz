@@ -12,6 +12,11 @@ public class GoToJail extends Block{
     @Override
     public void playTurn(Player player){
         super.printBlock(player);
+        if(player.getJailCardCount()>0){
+            System.out.println("Player "+player.getName()+" use jail free card. So " +player.getName()+" won't go to jail.");
+            player.decreaseJailCardCount();
+            return;
+        }
         player.setWaiting_time(waiting_time);
         player.mandotoryPay(penaltyMoney);
         System.out.println(player.getName() + " have to pay penalty money: " + penaltyMoney + "\n Now " + player.getName()
