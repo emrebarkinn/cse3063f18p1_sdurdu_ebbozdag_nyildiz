@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class LuckyCard extends Block{
+public class LuckyCard extends DefaultBlock{
 
     private int type;
     private Random random;
@@ -8,13 +8,14 @@ public class LuckyCard extends Block{
 
 
     public LuckyCard(int index,String name) {
-        super(index, name);
+        super.setIndex(index);
+        super.setName(name);
     }
 
 
     @Override
     public void playTurn(Player player){
-        super.printBlock(player);
+        printBlock(player);
         takeACard(player);
 
     }
@@ -43,8 +44,16 @@ public class LuckyCard extends Block{
                 break;
 
             case 4 : description="You won a jail free card. If you have this card you can pass the jail penalties.";
-                System.out.println(description);
                 player.increaseJailCardCount();
+                System.out.println(description+"\nNow you have "+player.getJailCardCount()+" jail free card.");
+                break;
+
         }
+    }
+    @Override
+    public void printBlock(Player player){
+        String name= (!player.isControlled()) ? player.getName() : "Player "+player.getName();
+        System.out.println("+-+-+");
+        System.out.println( name+" and has "+player.getMoney()+" money  in the "+getName()+" block.");
     }
 }

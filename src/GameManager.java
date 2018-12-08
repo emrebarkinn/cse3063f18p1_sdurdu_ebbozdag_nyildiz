@@ -44,7 +44,7 @@ public class GameManager {
         }
 
         double money = 0;
-        System.out.print("Please enter the initial money :");
+        System.out.print("Please enter the initial money (recommended money is 1000) :");
         condCheck=true;
         while(condCheck){       //check the money input is a double number
             try{
@@ -58,7 +58,7 @@ public class GameManager {
             }
         }
         condCheck = true;
-        System.out.println("Please enter the full turn limit (if any player will reach that fullturn number game will be finished) :");
+        System.out.print("Please enter the full turn limit (if any player will reach that fullturn number game will be finished) :");
         while(condCheck){       //check the full turn limit input is a double number
             try{
                 fullTurnNumber= scan.nextInt();
@@ -81,13 +81,14 @@ public class GameManager {
         bubbleSortPlayersWealth(players);
         int i=1;
         for(Player player: players){
-
+            if(i==1)
+                setWinner(player);
             System.out.println(i+". Player name : "+player.getName()+" Money: "+ player.getMoney());
             player.printOwnedBlocks();
             System.out.println("Wealth:"+(player.sumOfOwnedBlocks()+player.getMoney()));
             i++;
         }
-
+        System.out.println("\n\nWinner is "+getWinner().getName());
 
 
 
@@ -210,14 +211,6 @@ public class GameManager {
         this.winner = winner;
     }
 
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
 
     public int rollTurnDice(){
         die1.rollDice();

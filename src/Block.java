@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Block {
+public class Block extends DefaultBlock{
 
     private int index;
     private String name;
@@ -27,14 +27,6 @@ public class Block {
 
     public Block(int index) {
         this.index=index;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     public Player getOwner() {
@@ -76,9 +68,12 @@ public class Block {
         }
         if(this.owner==null){
             askToPlayerToPurchase(player);
+            return;
         }
-        if(this.owner!=player && this.owner!=null){
+        if(this.owner!=player){
             rentBlock(player);
+        }else{
+            System.out.println(player.getName()+" already owns this block");
         }
     }
     public void printBlock(Player player){
