@@ -1,3 +1,5 @@
+from TeacherFinder import TeacherFinder
+
 f = open("input.txt", "r")
 if f.mode == 'r':
     contents = f.read()
