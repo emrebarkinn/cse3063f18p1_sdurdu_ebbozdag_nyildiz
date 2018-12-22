@@ -1,29 +1,31 @@
+
 from tika import parser
 import csv
 
-
 class Main:
+
     pdfFile = 'Project1.pdf'
-    files_word_array = []
-    def __init__(self):
-        self.pdfFile=""
+    files_word_array=[]
 
-
-    def trim(self, xa):
+    def trim(self,xa):
         trimmedChar = ["\n", "."]
         for i in range(0, len(xa)):
             xa[i] = ''.join(e for e in xa[i] if e.isalnum())
             xa[i] = ''.join([e for e in xa[i] if not e.isdigit()])
 
-    def calculate_tf_words(self, teacher_name, file_number):
-        parsed = parser.from_file(teacher_name.replace(" ", "_") + "/" + file_number + ".pdf")
+
+
+
+
+    def calculate_tf_words(self, teacher_name,file_number):
+        parsed = parser.from_file(teacher_name.replace(" ", "_")+"/"+file_number+".pdf")
         content = parsed["content"]
         print(type(content))
         content = content.lower()
         content.replace("\n", " ")
         wordList = content.split()
-        print(wordList)
         self.trim(wordList)
+
 
         f1 = open("stopWords.txt", "r")
         if f1.mode == 'r':
@@ -57,26 +59,35 @@ class Main:
         i, j = [0, 0]
 
         for i in countedWords:
-            if len(i[0]) == 0:
+            if len(i[0])<=1:
                 countedWords.remove(i)
 
         countedWords.sort(key=lambda x: x[1], reverse=True)
         print(countedWords)
-        sum = 0
-        for i in countedWords:
-            sum += int(i[1])
+        sum=0
+        for i in countedWords :
+            sum+=int(i[1])
         print(sum)
         for i in countedWords:
-            i.append(i[1] / sum)
+            i.append(i[1]/sum)
         print(countedWords)
         self.files_word_array.append(countedWords)
-        with open(teacher_name.replace(" ", "_") + "/" + "0" + 'tf_list.csv', mode='w') as tf_list:
+        with open(teacher_name.replace(" ", "_")+"/"+file_number+'tf_list.csv', mode='w') as tf_list:
             tf_writer = csv.writer(tf_list, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            count=0
             for elements in countedWords:
-                tf_writer.writerow([elements[0], elements[2]])
+                try:
+                    tf_writer.writerow([elements[0], elements[2]])
+                except:
+                    print("error")
+                count +=1
+                if count==50:
+                    break
 
+def main():
+    aaa=Main()
+    for i in range(0,3):
+        aaa.calculate_tf_words("Ali Fuat Alkaya", str(i))
 
-    def calculete_all_pdf(self):
-        for i in range(0, 2):
-            self.calculate_tf_words("Ali Fuat Alkaya", str(i))
-
+if __name__ == "__main__":
+    main()
