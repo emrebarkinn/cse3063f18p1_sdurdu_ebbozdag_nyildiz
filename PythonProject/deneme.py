@@ -24,9 +24,14 @@ class DownloadPdf:
             print("That teacher is not exist")
             return
         elif teacher_name != "all":
-            for i in self.teachers:
-                if i != teacher_name:
-                    self.teachers.pop()
+            i=0
+            while i < len(self.teachers):
+                if self.teachers[i] != teacher_name:
+                    self.teachers.remove(self.teachers[i])
+                    i -= 1
+                i += 1
+
+
         print("Teacher name has been set")
 
     def download_teacher_pdf(self, teacher_name):
@@ -63,4 +68,15 @@ class DownloadPdf:
 
     def download_teacher_list_pdf(self):
         for teacher_name in self.teachers:
-            self.download_teacher_list_pdf(teacher_name)
+            self.download_teacher_pdf(teacher_name)
+
+def main():
+    ddd = DownloadPdf('Bilgisayar')
+    ddd.set_teacher()
+    ddd.download_teacher_list_pdf()
+
+
+
+
+if __name__ == "__main__":
+    main()
