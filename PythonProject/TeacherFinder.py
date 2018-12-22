@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 class TeacherFinder:
     teachers = []
 
-    def __init__(self):
+    def __init__(self,department_name):
         r = requests.get("https://eng.marmara.edu.tr/akademik/akademik-kadro/ogretim-uyeleri")
 
         data = r.text
@@ -28,6 +28,12 @@ class TeacherFinder:
                 tempName += deneme2[0]
                 if tempName != "":
                     self.teachers.append(tempName.replace(",", ""))
+            if (j != 5) and (j % 6 == 5) and (j <= 683):
+                if len(deneme2) == 0:
+                    self.teachers.pop()
+                elif deneme2[0].find(department_name) < 0:
+                    self.teachers.pop()
+
             j += 1
 
     def get_teachers(self):

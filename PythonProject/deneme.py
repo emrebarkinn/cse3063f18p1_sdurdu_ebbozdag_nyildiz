@@ -5,45 +5,67 @@ from urllib.request import Request, urlopen
 import requests
 import urllib.request
 from bs4 import BeautifulSoup
+import os
+import errno
 
 from TeacherFinder import TeacherFinder
 
-aaa = TeacherFinder()
-teachers = aaa.get_teachers()
+class DownloadPdf:
+    teachers = []
+    teachers_temp = None
+    department_name = None
 
-search_query = scholarly.search_author('Ali Fuat Alkaya')
-author = next(search_query).fill()
-# print(author)
+    def __init__(self, department_name):
+        self.department_name = department_name
+        self.teachers_temp = TeacherFinder(department_name)
+        self.teachers = self.teachers_temp.get_teachers()
 
-# Print the titles of the author's publications
-# print([pub.bib['title'] for pub in author.publications])
+    def set_teacher(self):
+        print("Teachers of " + str(self.department_name))
+        self.teachers_temp.print_teachers()
+        teacher_name = input("Please enter teacher name (If you want all teacher enter \'all\'):")
 
-# Take a closer look at the first publication
+        if self.teachers.index(teacher_name) < 0 and teacher_name != "all":
+            print("That teacher is not exist")
+            return
+        elif teacher_name != "all":
+            for i in range(0, len(self.teachers)):
+                if i != self.teachers.index(teacher_name):
+                    self.teachers.pop(i)
+        print("Teacher name has been set")
 
-pub = author.publications[0].fill()
-# print(pub)
-print(len(author.publications))
-count=0
-for i in author.publications:
-    try:
-        doc_url = i.fill().bib['eprint']
+    def download_teacher_pdf(self, teacher_name):
+        search_query = scholarly.search_author(teacher_name)
+        author = next(search_query).fill()
 
-        if doc_url.endswith(".pdf"):
+        print(len(author.publications))
+        count = 0
+        for i in author.publications:
+            try:
+                doc_url = i.fill().bib['eprint']
 
-            doc_url = doc_url[doc_url.rfind("http", 0, len(doc_url)):]
-            print(doc_url)
-            response = requests.get(doc_url, stream=True)
-            with open('asd'+str(count)+'.pdf', 'wb') as f:
-                f.write(response.content)
-            count += 1
+                if doc_url.endswith(".pdf"):
 
-    except:
-        print("error")
+                    doc_url = doc_url[doc_url.rfind("http", 0, len(doc_url)):]
+                    print(doc_url)
+                    response = requests.get(doc_url, stream=True)
+                    if response.status_code == 200:
+                        filename = teacher_name.replace(" ", "_") + "/" + str(count) + '.pdf'
+                        if not os.path.exists(os.path.dirname(filename)):
+                            try:
+                                os.makedirs(os.path.dirname(filename))
+                            except OSError as exc:  # Guard against race condition
+                                if exc.errno != errno.EEXIST:
+                                    raise
+                        with open(filename, 'wb') as f:
+                            f.write(response.content)
 
-url = pub.bib['url']
-print(url)
+                        count += 1
 
-# r = requests.get(url)
 
-# with open("document232.txt", "wb") as code:
-#    code.write(r.content)
+            except:
+                print(end="")
+
+    def download_teacher_list_pdf(self):
+        for teacher_name in self.teachers:
+            self.download_teacher_list_pdf(teacher_name)
