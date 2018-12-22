@@ -1,10 +1,5 @@
 import scholarly
-from pathlib import Path
 import requests
-from urllib.request import Request, urlopen
-import requests
-import urllib.request
-from bs4 import BeautifulSoup
 import os
 import errno
 
@@ -29,9 +24,9 @@ class DownloadPdf:
             print("That teacher is not exist")
             return
         elif teacher_name != "all":
-            for i in range(0, len(self.teachers)):
-                if i != self.teachers.index(teacher_name):
-                    self.teachers.pop(i)
+            for i in self.teachers:
+                if i != teacher_name:
+                    self.teachers.pop()
         print("Teacher name has been set")
 
     def download_teacher_pdf(self, teacher_name):
