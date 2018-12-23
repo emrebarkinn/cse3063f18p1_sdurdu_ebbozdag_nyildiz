@@ -2,7 +2,6 @@ from tika import parser
 import csv
 import re
 
-
 class Main:
     pdfFile = 'Project1.pdf'
     files_word_array = []
@@ -76,7 +75,12 @@ class Main:
         print(countedWords)
         self.files_word_array.append(countedWords)
         with open(teacher_name.replace(" ", "_") + "/" + file_number + 'tf_list.csv', mode='w') as tf_list:
+            headers = ['Word', 'TfValue']
+
             tf_writer = csv.writer(tf_list, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            tf_writer.writerow(headers)
+
+
             count = 0
             for elements in countedWords:
                 try:
@@ -86,7 +90,21 @@ class Main:
                 count += 1
                 if count == 50:
                     break
-
+        '''with open('Ali_Fuat_Alkaya/'+file_number+'tf_list.csv') as csv_file:
+            csv_reader = csv.reader(csv_file)
+            d={}
+            for row in csv_reader:
+                d[row[0]] = row[1:]
+            print(tf_list)'''
+        files = ["0tf_list.csv", "1tf_list.csv", "2tf_list.csv"]
+        with open("output.tsv", "w", newline='') as fw:
+            cw = csv.writer(fw, delimiter="\t")  # output is tab delimited
+            for filename in files:
+                with open(filename, 'r') as f:
+                    cr = csv.reader(f)
+                    # get title
+                    for column_name in (x.strip() for x in next(cr)):
+                        cw.writerow([filename, column_name])
 
 def main():
     aaa = Main()
