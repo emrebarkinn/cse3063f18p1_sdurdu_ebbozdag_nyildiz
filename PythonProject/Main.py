@@ -1,10 +1,16 @@
 from tika import parser
 import csv
 import re
+import math
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
 
 class Main:
     pdfFile = 'Project1.pdf'
     files_word_array = []
+    dictinory_list = []
+    idf_dict = {}
 
     def trim2(self, xa):
         # trimmedChar = ["\n", "."]
@@ -77,7 +83,7 @@ class Main:
         self.files_word_array.append(countedWords)
         with open(teacher_name.replace(" ", "_") + "/" + file_number + 'tf_list.csv', mode='w') as tf_list:
 
-
+            temp_dict = {}
             tf_writer = csv.writer(tf_list, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
             headers = ['Word', 'TfValue']
@@ -85,14 +91,17 @@ class Main:
 
             count = 0
             for elements in countedWords:
-                try:
-                    tf_writer.writerow([elements[0], elements[2]])
-                except:
-                    print("error")
+                temp_dict.update({elements[0]: float(elements[2])})
+                if count <= 50:
+                    try:
+                        tf_writer.writerow([elements[0], elements[2]])
+                    except:
+                        print("error")
+
                 count += 1
-                if count == 50:
-                    break
-        with open('Ali_Fuat_Alkaya/'+file_number+'tf_list.csv') as csv_file:
+
+            self.dictinory_list.append(temp_dict)
+        with open(teacher_name.replace(" ", "_") + "/" +file_number+'tf_list.csv') as csv_file:
             csv_reader = csv.reader(csv_file)
             d = {}
             for row in csv_reader:
@@ -100,14 +109,63 @@ class Main:
                     if row[0] == 'Word':
                         continue
 
-                    d.update({row[0]: row[1]})
+                    d.update({row[0]: float(row[1])})
                 except:
                     pass
 
+
+        '''
+        wordcloud = WordCloud(width=800, height=800,
+                              background_color='white',
+                              min_font_size=10).generate_from_frequencies(d)
+        fig = plt.figure(1)
+        plt.imshow(wordcloud)
+        plt.axis('off')
+        plt.show()
+        fig.savefig("word1.png", dpi=900)
+        '''
+
+    def calculateIdf(self):
+
+
+        for i in range(0,len(self.dictinory_list)):
+            for word, key in self.dictinory_list[i].items():
+                self.idf_dict[word] = key
+
+
+        for word,key in self.idf_dict.items():
+            temp_count=0
+            for i in range(0,len(self.dictinory_list)):
+                if word in self.dictinory_list[i]:
+                    temp_count += 1
+            self.idf_dict[word] = math.log10(len(self.dictinory_list)/temp_count)
+
+        for word in sorted(self.idf_dict.items(), key=lambda x : x[1] ,reverse=True):
+            print(word[0] + " " + str(word[1]))
+
+    def calculate_idf_tf(self):
+
+        for i in range(0, len(self.dictinory_list)):
+
+            temp_dict = {}
+            for word, key in self.idf_dict.items():
+                if word in self.dictinory_list[i]:
+                    temp_dict[word] = key*self.dictinory_list[i][word]
+            count=0
+            for aaa in sorted(temp_dict.items(), key=lambda x: x[1], reverse=True):
+                if count <= 50:
+                    print(aaa[0] + " " + str(aaa[1]))
+                count += 1
+            print("-----------------------------")
+
+
 def main():
     aaa = Main()
-    for i in range(0, 3):
-        aaa.calculate_tf_words("Ali Fuat Alkaya", str(i))
+    for i in range(0, 25):
+        aaa.calculate_tf_words("Haluk_Topçuoğlu", str(i))
+
+    aaa.calculateIdf()
+    aaa.calculate_idf_tf()
 
 if __name__ == "__main__":
     main()
