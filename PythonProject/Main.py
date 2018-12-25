@@ -3,6 +3,7 @@ import csv
 import re
 import math
 from wordcloud import WordCloud
+from deneme import DownloadPdf
 import matplotlib.pyplot as plt
 
 
@@ -16,9 +17,9 @@ class Main:
         # trimmedChar = ["\n", "."]
         i = 0
         while i < len(xa):
-            xa[i] = ''.join(e for e in xa[i] if e.isalnum())
+            #xa[i] = ''.join(e for e in xa[i] if e.isalnum())
             # xa[i] = ''.join([e for e in xa[i] if not e.isdigit()])
-            if re.match('^[0-9]+$', xa[i]):
+            if not re.match('^[a-zA-Z]+$', xa[i]):
                 xa.pop(i)
                 i -= 1
             i += 1
@@ -26,9 +27,8 @@ class Main:
     def trim(self, xa):
         trimmedChar = ["\n", "."]
         for i in range(0, len(xa)):
-            if xa[i] != ' ':
-                if not re.match('[a-zA-Z0-9_]', xa[i]):
-                    xa[i].replace(xa[i], ' ')
+            if not re.match('[a-zA-Z]', xa[i]):
+                 xa[i].replace(xa[i], ' ')
 
     def calculate_tf_words(self, teacher_name, file_number):
         parsed = parser.from_file(teacher_name.replace(" ", "_") + "/" + file_number + ".pdf")
@@ -86,8 +86,7 @@ class Main:
             temp_dict = {}
             tf_writer = csv.writer(tf_list, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-            headers = ['Word', 'TfValue']
-            tf_writer.writerow(headers)
+
 
             count = 0
             for elements in countedWords:
@@ -101,29 +100,30 @@ class Main:
                 count += 1
 
             self.dictinory_list.append(temp_dict)
+        tf_list.close()
         with open(teacher_name.replace(" ", "_") + "/" +file_number+'tf_list.csv') as csv_file:
             csv_reader = csv.reader(csv_file)
             d = {}
             for row in csv_reader:
                 try:
-                    if row[0] == 'Word':
-                        continue
+
 
                     d.update({row[0]: float(row[1])})
                 except:
                     pass
+        csv_file.close()
 
 
-        '''
+
         wordcloud = WordCloud(width=800, height=800,
                               background_color='white',
                               min_font_size=10).generate_from_frequencies(d)
         fig = plt.figure(1)
         plt.imshow(wordcloud)
         plt.axis('off')
-        plt.show()
-        fig.savefig("word1.png", dpi=900)
-        '''
+        #plt.show()
+        fig.savefig(teacher_name.replace(" ", "_") + "/" +file_number+"_tf.pdf", dpi=900)
+
 
     def calculateIdf(self):
 
@@ -143,7 +143,7 @@ class Main:
         for word in sorted(self.idf_dict.items(), key=lambda x : x[1] ,reverse=True):
             print(word[0] + " " + str(word[1]))
 
-    def calculate_idf_tf(self):
+    def calculate_idf_tf(self, teacher_name):
 
 
         for i in range(0, len(self.dictinory_list)):
@@ -152,21 +152,52 @@ class Main:
             for word, key in self.idf_dict.items():
                 if word in self.dictinory_list[i]:
                     temp_dict[word] = key*self.dictinory_list[i][word]
-            count=0
-            for aaa in sorted(temp_dict.items(), key=lambda x: x[1], reverse=True):
-                if count <= 50:
-                    print(aaa[0] + " " + str(aaa[1]))
-                count += 1
-            print("-----------------------------")
+
+            with open(teacher_name.replace(" ", "_") + "/" + str(i) + 'tf-idf_list.csv', mode='w') as tf_list2:
+
+
+                tf_writer = csv.writer(tf_list2, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+                count = 0
+                for aaa in sorted(temp_dict.items(), key=lambda x: x[1], reverse=True):
+                    if count <= 50:
+                        print(aaa[0] + " " + str(aaa[1]))
+                        tf_writer.writerow([aaa[0], str(aaa[1])])
+                    count += 1
+                print("--------------------------------------")
+
+            with open(teacher_name.replace(" ", "_") + "/" + str(i) + 'tf-idf_list.csv') as csv_file:
+                csv_reader = csv.reader(csv_file)
+                d = {}
+                for row in csv_reader:
+                    try:
+
+                        d.update({row[0]: float(row[1])})
+                    except:
+                        pass
+            csv_file.close()
+
+            wordcloud = WordCloud(width=800, height=800,
+                                  background_color='white',
+                                  min_font_size=10).generate_from_frequencies(d)
+            fig = plt.figure(1)
+            plt.imshow(wordcloud)
+            plt.axis('off')
+            # plt.show()
+            fig.savefig(teacher_name.replace(" ", "_") + "/" + str(i) + "tf-idf.pdf", dpi=900)
+
+
+
 
 
 def main():
+
     aaa = Main()
-    for i in range(0, 25):
-        aaa.calculate_tf_words("Haluk_Topçuoğlu", str(i))
+    for i in range(0, 15):
+        aaa.calculate_tf_words("Haluk Topçuoğlu", str(i))
 
     aaa.calculateIdf()
-    aaa.calculate_idf_tf()
+    aaa.calculate_idf_tf("Haluk Topçuoğlu")
 
 if __name__ == "__main__":
     main()

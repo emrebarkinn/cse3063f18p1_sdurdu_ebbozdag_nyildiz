@@ -47,10 +47,11 @@ class DownloadPdf:
                 if doc_url.endswith(".pdf"):
 
                     doc_url = doc_url[doc_url.rfind("http", 0, len(doc_url)):]
-                    print(doc_url)
+
                     response = requests.get(doc_url, stream=True)
                     if response.status_code == 200:
                         filename = teacher_name.replace(" ", "_") + "/" + str(count) + '.pdf'
+                        print(doc_url)
                         if not os.path.exists(os.path.dirname(filename)):
                             try:
                                 os.makedirs(os.path.dirname(filename))
@@ -66,9 +67,12 @@ class DownloadPdf:
             except:
                 print(end="")
 
+        return count
+
     def download_teacher_list_pdf(self):
         for teacher_name in self.teachers:
             self.download_teacher_pdf(teacher_name)
+
 
 def main():
     ddd = DownloadPdf('Bilgisayar')
