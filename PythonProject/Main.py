@@ -145,6 +145,7 @@ class Main:
 
     def calculate_idf_tf(self):
 
+
         for i in range(0, len(self.dictinory_list)):
 
             temp_dict = {}
