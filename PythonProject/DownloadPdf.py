@@ -49,19 +49,21 @@ class DownloadPdf:
                     doc_url = doc_url[doc_url.rfind("http", 0, len(doc_url)):]
 
                     response = requests.get(doc_url, stream=True)
-                    if response.status_code == 200:
-                        filename = teacher_name.replace(" ", "_") + "/" + str(count) + '.pdf'
-                        print(doc_url)
-                        if not os.path.exists(os.path.dirname(filename)):
-                            try:
-                                os.makedirs(os.path.dirname(filename))
-                            except OSError as exc:  # Guard against race condition
-                                if exc.errno != errno.EEXIST:
-                                    raise
-                        with open(filename, 'wb') as f:
-                            f.write(response.content)
+                    doc_url = response.url
+                    if doc_url.endswith(".pdf"):
+                        if response.status_code == 200:
+                            filename = teacher_name.replace(" ", "_") + "/" + str(count) + '.pdf'
+                            print(doc_url)
+                            if not os.path.exists(os.path.dirname(filename)):
+                                try:
+                                    os.makedirs(os.path.dirname(filename))
+                                except OSError as exc:  # Guard against race condition
+                                    if exc.errno != errno.EEXIST:
+                                        raise
+                            with open(filename, 'wb') as f:
+                                f.write(response.content)
 
-                        count += 1
+                            count += 1
 
 
             except:
@@ -70,17 +72,8 @@ class DownloadPdf:
         return count
 
     def download_teacher_list_pdf(self):
+        i=0
         for teacher_name in self.teachers:
-            self.download_teacher_pdf(teacher_name)
+            self.teachers[i]= [self.teachers[i], self.download_teacher_pdf(teacher_name)]
 
 
-def main():
-    ddd = DownloadPdf('Bilgisayar')
-    ddd.set_teacher()
-    ddd.download_teacher_list_pdf()
-
-
-
-
-if __name__ == "__main__":
-    main()

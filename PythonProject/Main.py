@@ -3,12 +3,11 @@ import csv
 import re
 import math
 from wordcloud import WordCloud
-from deneme import DownloadPdf
+from DownloadPdf import DownloadPdf
 import matplotlib.pyplot as plt
 
 
 class Main:
-    pdfFile = 'Project1.pdf'
     files_word_array = []
     dictinory_list = []
     idf_dict = {}
@@ -31,6 +30,7 @@ class Main:
                  xa[i].replace(xa[i], ' ')
 
     def calculate_tf_words(self, teacher_name, file_number):
+        #self.dictinory_list = []
         parsed = parser.from_file(teacher_name.replace(" ", "_") + "/" + file_number + ".pdf")
         content = parsed["content"]
         print(type(content))
@@ -161,6 +161,9 @@ class Main:
                 count = 0
                 for aaa in sorted(temp_dict.items(), key=lambda x: x[1], reverse=True):
                     if count <= 50:
+                        if aaa[1] == 0:
+                            continue
+
                         print(aaa[0] + " " + str(aaa[1]))
                         tf_writer.writerow([aaa[0], str(aaa[1])])
                     count += 1
@@ -176,15 +179,15 @@ class Main:
                     except:
                         pass
             csv_file.close()
-
-            wordcloud = WordCloud(width=800, height=800,
-                                  background_color='white',
-                                  min_font_size=10).generate_from_frequencies(d)
-            fig = plt.figure(1)
-            plt.imshow(wordcloud)
-            plt.axis('off')
-            # plt.show()
-            fig.savefig(teacher_name.replace(" ", "_") + "/" + str(i) + "tf-idf.pdf", dpi=900)
+            if len(d) > 0:
+                wordcloud = WordCloud(width=800, height=800,
+                                      background_color='white',
+                                      min_font_size=10).generate_from_frequencies(d)
+                fig = plt.figure(1)
+                plt.imshow(wordcloud)
+                plt.axis('off')
+                # plt.show()
+                fig.savefig(teacher_name.replace(" ", "_") + "/" + str(i) + "tf-idf.pdf", dpi=900)
 
 
 
@@ -192,12 +195,31 @@ class Main:
 
 def main():
 
-    aaa = Main()
-    for i in range(0, 15):
-        aaa.calculate_tf_words("Haluk Topçuoğlu", str(i))
 
-    aaa.calculateIdf()
-    aaa.calculate_idf_tf("Haluk Topçuoğlu")
+    answer = input("Do you want to downland files or you already downloaded them ? y/n :")
+    if answer == "y":
+        ddd = DownloadPdf('Bilgisayar')
+        ddd.set_teacher()
+        print(ddd.teachers[0])
+        ddd.download_teacher_list_pdf()
+
+        aaa = Main()
+        for temp in ddd.teachers:
+            for i in range(0, temp[1]):
+                aaa.calculate_tf_words(temp[0], str(i))
+
+            aaa.calculateIdf()
+            aaa.calculate_idf_tf(temp[0])
+
+    else:
+        teacher_name = input("Please enter folder name (teacher name) without \'_\' ")
+        count = input("Please enter total document number")
+        aaa = Main()
+        for i in range(0, int(count)):
+            aaa.calculate_tf_words(teacher_name, str(i))
+
+        aaa.calculateIdf()
+        aaa.calculate_idf_tf(teacher_name)
 
 if __name__ == "__main__":
     main()
