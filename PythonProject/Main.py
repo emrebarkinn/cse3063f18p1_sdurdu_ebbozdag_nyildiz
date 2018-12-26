@@ -211,6 +211,7 @@ def main():
             aaa.calculateIdf()
             aaa.calculate_idf_tf(temp[0])
 
+
     else:
         teacher_name = input("Please enter folder name (teacher name) without \'_\' ")
         count = input("Please enter total document number")
